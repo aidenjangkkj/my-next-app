@@ -44,9 +44,3 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   res.status(200).json(project);
 }
-
-// ✅ 개별 프로젝트 API 엔드포인트 추가 완료!
-// - /api/projects/[id] 요청 시 해당 프로젝트 데이터 반환
-// - 잘못된 ID 요청 시 404 에러 처리
-// - 이제 http://localhost:3000/api/projects/1 에 접속해서 테스트 가능
-// 추가 수정이 필요하면 알려주세요! 🚀

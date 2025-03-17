@@ -22,8 +22,3 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     ]);
   }
-  
-  // ✅ API 엔드포인트 추가 완료!
-  // - 프로젝트 데이터를 제공하는 /api/projects 엔드포인트 추가
-  // - 이제 /api/projects 에 접속하면 JSON 데이터를 반환함
-  // - 추가 수정이 필요하면 알려주세요! 🚀

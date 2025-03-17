@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import "../../app/globals.css";
+import Navigation from "@/components/Navigation";
 
 const ProjectDetail: FC = () => {
   const router = useRouter();
@@ -45,19 +46,7 @@ const ProjectDetail: FC = () => {
         <title>{project.title} - My Portfolio</title>
         <meta name="description" content={project.description} />
       </Head>
-      <header className="p-4 bg-gray-800 text-white fixed w-full top-0 shadow-lg">
-        <nav className="flex justify-between items-center max-w-6xl mx-auto">
-          <h1 className="text-xl font-bold">
-            <Link href="/">My Portfolio</Link>
-          </h1>
-          <div className="space-x-4">
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <Link href="/projects">Projects</Link>
-            <Link href="/contact">Contact</Link>
-          </div>
-        </nav>
-      </header>
+      <Navigation></Navigation>
       <main className="flex flex-col items-center justify-center w-full">
         <div className="max-w-4xl bg-white p-6 rounded-lg shadow-md text-center">
           <img
@@ -98,9 +87,3 @@ const ProjectDetail: FC = () => {
 };
 
 export default ProjectDetail;
-
-// ✅ 프로젝트 상세 페이지 가운데 정렬 완료
-// - flex + items-center + justify-center 추가하여 중앙 배치
-// - 프로젝트 카드도 텍스트 중앙 정렬
-// - 버튼도 가운데 정렬
-// 추가 수정이 필요하면 알려주세요! 🚀
