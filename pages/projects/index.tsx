@@ -4,6 +4,8 @@ import Image from "next/image";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import type { ProjectSummary } from "@/data/projects";
 import type { GitHubProject, GitHubProjectError } from "@/lib/github";
+import { FC, useCallback, useEffect, useState } from "react";
+import type { ProjectSummary } from "@/data/projects";
 import Navigation from "@/components/Navigation";
 import "../../app/globals.css";
 
@@ -109,7 +111,33 @@ const Projects: FC = () => {
       }),
     [],
   );
+  const loadProjects = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
 
+      const response = await fetch("/api/projects");
+      if (!response.ok) {
+        throw new Error("프로젝트 목록을 불러오지 못했습니다.");
+      }
+
+      const data: ProjectSummary[] = await response.json();
+      setProjects(data);
+    } catch (err) {
+      console.error("Error fetching projects:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "알 수 없는 이유로 프로젝트 정보를 가져오지 못했어요.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadProjects();
+  }, [loadProjects]);
   return (
     <div>
       <Head>

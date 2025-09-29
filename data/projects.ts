@@ -13,6 +13,7 @@ export type ProjectSummary = Pick<ProjectDetail, "id" | "title" | "description" 
 
 const projects: ProjectDetail[] = [
   {
+
     id: "my-next-app",
     title: "My Next App (Portfolio & Board)",
     description: "Next.js 기반 포트폴리오 + 게시판 웹앱.",
@@ -165,6 +166,38 @@ const projects: ProjectDetail[] = [
     github: "https://github.com/aidenjangkkj/DEG",
     demo: "",
     image: "/images/projects/deg.svg",
+=======
+    id: "next-portfolio",
+    title: "Responsive Portfolio",
+    description: "Landing page that showcases developer skills with responsive layouts and accessibility in mind.",
+    longDescription:
+      "A personal portfolio built with Next.js and Tailwind CSS. It focuses on fast load times, semantic markup, and accessible navigation across desktop and mobile devices.",
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    github: "https://github.com/yourrepo/next-portfolio",
+    demo: "https://yourdomain.com/portfolio",
+    image: "/images/project-portfolio.svg",
+  },
+  {
+    id: "firebase-dashboard",
+    title: "Firebase Dashboard",
+    description: "Admin dashboard for monitoring Firestore collections and authentication events in real time.",
+    longDescription:
+      "A real-time dashboard that visualises Firebase usage metrics and allows administrators to manage Firestore documents with optimistic UI updates.",
+    techStack: ["Next.js", "Firebase", "React Query", "Tailwind CSS"],
+    github: "https://github.com/yourrepo/firebase-dashboard",
+    demo: "https://yourdomain.com/firebase-dashboard",
+    image: "/images/project-dashboard.svg",
+  },
+  {
+    id: "design-system",
+    title: "UI Design System",
+    description: "Reusable component library with documentation and live playground for designers and engineers.",
+    longDescription:
+      "A shared design system that includes typography, colour palettes, and interactive components documented with Storybook for teams to adopt consistently.",
+    techStack: ["React", "TypeScript", "Storybook", "Tailwind CSS"],
+    github: "https://github.com/yourrepo/design-system",
+    demo: "https://yourdomain.com/design-system",
+    image: "/images/project-design-system.svg",
   },
 ];
 
