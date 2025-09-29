@@ -1,89 +1,132 @@
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import "../../app/globals.css";
+import type { ProjectDetail } from "@/data/projects";
 import Navigation from "@/components/Navigation";
+import "../../app/globals.css";
 
-const ProjectDetail: FC = () => {
+const ProjectDetailPage: FC = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [project, setProject] = useState<{
-    title: string;
-    description: string;
-    techStack: string[];
-    github: string;
-    demo: string;
-    image: string;
-  } | null>(null);
+
+  const [project, setProject] = useState<ProjectDetail | null>(null);
+  const [status, setStatus] = useState<"loading" | "error" | "success">("loading");
 
   useEffect(() => {
-    if (router.isReady && id) {
-      const fetchProject = async () => {
-        try {
-          const response = await fetch(`/api/projects/${id}`);
-          if (!response.ok) throw new Error("Project not found");
-          const data = await response.json();
-          setProject(data);
-        } catch (error) {
-          console.error("Error fetching project:", error);
-          setProject(null);
-        }
-      };
-      fetchProject();
+    if (!router.isReady || !id) {
+      return;
     }
+
+    const loadProject = async () => {
+      try {
+        setStatus("loading");
+        const response = await fetch(`/api/projects/${id}`);
+        if (!response.ok) {
+          throw new Error("Project not found");
+        }
+        const data: ProjectDetail = await response.json();
+        setProject(data);
+        setStatus("success");
+      } catch (err) {
+        console.error("Error fetching project:", err);
+        setStatus("error");
+      }
+    };
+
+    void loadProject();
   }, [router.isReady, id]);
 
-  if (!project) {
-    return (
-      <p className="text-center mt-20 text-gray-600">Loading project details...</p>
-    );
-  }
+  const pageTitle =
+    status === "success" && project
+      ? `${project.title} - My Portfolio`
+      : "Projects - My Portfolio";
+  const pageDescription =
+    status === "success" && project
+      ? project.description
+      : "Browse individual project details including tech stack and live demos.";
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900">
+    <div>
       <Head>
-        <title>{project.title} - My Portfolio</title>
-        <meta name="description" content={project.description} />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
       </Head>
-      <Navigation></Navigation>
-      <main className="flex flex-col items-center justify-center w-full">
-        <div className="max-w-4xl bg-white p-6 rounded-lg shadow-md text-center">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full rounded-lg mb-6"
-          />
-          <h2 className="text-3xl font-bold mb-4">{project.title}</h2>
-          <p className="mb-4">{project.description}</p>
-          <h3 className="text-xl font-semibold mb-2">Tech Stack</h3>
-          <ul className="list-disc list-inside mb-4">
-            {project.techStack.map((tech, index) => (
-              <li key={index}>{tech}</li>
-            ))}
-          </ul>
-          <div className="flex space-x-4 justify-center">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-gray-800 text-white font-semibold rounded hover:bg-gray-700"
-            >
-              GitHub
-            </a>
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-indigo-600 text-white font-semibold rounded hover:bg-indigo-700"
-            >
-              Live Demo
-            </a>
-          </div>
+      <Navigation />
+      <main className="flex min-h-screen flex-col items-center bg-gray-100 pt-24 text-gray-900">
+        <div className="w-full max-w-4xl px-6">
+          {status === "loading" && (
+            <div className="rounded-lg bg-white p-6 text-center shadow-md">
+              <p className="text-gray-600">프로젝트 정보를 불러오는 중입니다...</p>
+            </div>
+          )}
+
+          {status === "error" && (
+            <div className="rounded-lg bg-red-50 p-6 text-center text-red-700 shadow-md" role="alert">
+              <p className="font-semibold">프로젝트 정보를 찾을 수 없습니다.</p>
+              <p className="mt-2 text-sm">
+                주소를 다시 확인하거나 프로젝트 목록에서 다른 항목을 선택해 주세요.
+              </p>
+              <Link
+                href="/projects"
+                className="mt-4 inline-flex items-center justify-center rounded bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
+              >
+                프로젝트 목록으로 이동
+              </Link>
+            </div>
+          )}
+
+          {status === "success" && project && (
+            <article className="rounded-lg bg-white p-8 text-center shadow-md">
+              <Image
+                src={project.image}
+                alt={project.title}
+                width={960}
+                height={540}
+                className="mb-6 h-auto w-full rounded-lg object-cover"
+                priority
+              />
+              <h2 className="text-3xl font-bold mb-4">{project.title}</h2>
+              <p className="mb-6 text-gray-700">{project.longDescription}</p>
+              <h3 className="text-xl font-semibold mb-2">Tech Stack</h3>
+              <ul className="mb-6 flex flex-wrap justify-center gap-3 text-sm text-gray-700">
+                {project.techStack.map((tech) => (
+                  <li key={tech} className="rounded-full bg-indigo-50 px-3 py-1 font-semibold text-indigo-700">
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded bg-gray-800 px-4 py-2 font-semibold text-white transition hover:bg-gray-700"
+                >
+                  GitHub
+                </a>
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700"
+                >
+                  Live Demo
+                </a>
+                <Link
+                  href="/projects"
+                  className="inline-flex items-center gap-2 rounded border border-indigo-200 px-4 py-2 font-semibold text-indigo-600 transition hover:bg-indigo-50"
+                >
+                  프로젝트 목록 보기
+                </Link>
+              </div>
+            </article>
+          )}
         </div>
       </main>
     </div>
   );
 };
 
-export default ProjectDetail;
+export default ProjectDetailPage;

@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { FC, useState } from 'react';
 import '../app/globals.css';
 import Navigation from '@/components/Navigation';

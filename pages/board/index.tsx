@@ -9,8 +9,8 @@ import Navigation from "@/components/Navigation";
 interface Post {
   id: string;
   title: string;
-  content: string;
-  // 필요한 다른 필드들을 추가합니다.
+  content?: string;
+  createdAt?: string;
 }
 
 const Board: FC = () => {
@@ -21,10 +21,17 @@ const Board: FC = () => {
     const fetchPosts = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "posts"));
-        const postsData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<Post, "id">),
-        }));
+        const postsData = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            title: data.title ?? "제목 없음",
+            content: data.content,
+            createdAt: data.createdAt?.toDate
+              ? data.createdAt.toDate().toISOString()
+              : undefined,
+          } satisfies Post;
+        });
         setPosts(postsData);
       } catch (error) {
         console.error("게시글을 불러오는 중 오류 발생:", error);
@@ -68,7 +75,11 @@ const Board: FC = () => {
                     {post.title}
                   </Link>
                   <p className="text-gray-700 mt-2">
-                    {post.content.substring(0, 50)}...
+                    {post.content
+                      ? `${post.content.slice(0, 80)}${
+                          post.content.length > 80 ? "..." : ""
+                        }`
+                      : "내용이 없습니다."}
                   </p>
                 </li>
               ))}
