@@ -127,7 +127,7 @@ const projects: ProjectDetail[] = [
     title: "Delivery Electron App",
     description: "주문 수신·출력용 Electron 데스크톱.",
     longDescription:
-      "모바일 주문과 연동되는 데스크톱 클라이언트. 시리얼 포트를 통한 영수증 프린터 출력, 주문 알림/처리 플로우를 제공합니다.",
+      "주문과 연동되는 데스크톱 클라이언트. 시리얼 포트를 통한 영수증 프린터 출력, 주문 알림/처리 플로우를 제공합니다.",
     techStack: ["Electron", "JavaScript", "SerialPort"],
     github: "https://github.com/aidenjangkkj/del-electron-app",
     demo: "",
@@ -158,9 +158,9 @@ const projects: ProjectDetail[] = [
   {
     id: "DEG",
     title: "DEG (2D Game by Python)",
-    description: "파이썬 2D 게임 실험.",
+    description: "파이썬 2D 게임.",
     longDescription:
-      "Pygame으로 간단한 2D 게임 루프/스프라이트/충돌 처리를 구현하며 게임 아키텍처 기초를 정리했습니다.",
+      "Pygame으로 2D 게임 루프/스프라이트/충돌 처리 및 각종 로직을 구현하며 게임 아키텍처 기초를 정리했습니다.",
     techStack: ["Python", "Pygame"],
     github: "https://github.com/aidenjangkkj/DEG",
     demo: "",
