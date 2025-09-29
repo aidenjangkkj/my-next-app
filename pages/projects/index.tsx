@@ -4,8 +4,6 @@ import Image from "next/image";
 import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import type { ProjectSummary } from "@/data/projects";
 import type { GitHubProject, GitHubProjectError } from "@/lib/github";
-import { FC, useCallback, useEffect, useState } from "react";
-import type { ProjectSummary } from "@/data/projects";
 import Navigation from "@/components/Navigation";
 import "../../app/globals.css";
 
