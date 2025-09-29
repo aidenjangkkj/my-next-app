@@ -12,7 +12,9 @@ const ProjectDetailPage: FC = () => {
   const { id } = router.query;
 
   const [project, setProject] = useState<ProjectDetail | null>(null);
-  const [status, setStatus] = useState<"loading" | "error" | "success">("loading");
+  const [status, setStatus] = useState<"loading" | "error" | "success">(
+    "loading"
+  );
 
   useEffect(() => {
     if (!router.isReady || !id) {
@@ -58,15 +60,21 @@ const ProjectDetailPage: FC = () => {
         <div className="w-full max-w-4xl px-6">
           {status === "loading" && (
             <div className="rounded-lg bg-white p-6 text-center shadow-md">
-              <p className="text-gray-600">프로젝트 정보를 불러오는 중입니다...</p>
+              <p className="text-gray-600">
+                프로젝트 정보를 불러오는 중입니다...
+              </p>
             </div>
           )}
 
           {status === "error" && (
-            <div className="rounded-lg bg-red-50 p-6 text-center text-red-700 shadow-md" role="alert">
+            <div
+              className="rounded-lg bg-red-50 p-6 text-center text-red-700 shadow-md"
+              role="alert"
+            >
               <p className="font-semibold">프로젝트 정보를 찾을 수 없습니다.</p>
               <p className="mt-2 text-sm">
-                주소를 다시 확인하거나 프로젝트 목록에서 다른 항목을 선택해 주세요.
+                주소를 다시 확인하거나 프로젝트 목록에서 다른 항목을 선택해
+                주세요.
               </p>
               <Link
                 href="/projects"
@@ -92,7 +100,10 @@ const ProjectDetailPage: FC = () => {
               <h3 className="text-xl font-semibold mb-2">Tech Stack</h3>
               <ul className="mb-6 flex flex-wrap justify-center gap-3 text-sm text-gray-700">
                 {project.techStack.map((tech) => (
-                  <li key={tech} className="rounded-full bg-indigo-50 px-3 py-1 font-semibold text-indigo-700">
+                  <li
+                    key={tech}
+                    className="rounded-full bg-indigo-50 px-3 py-1 font-semibold text-indigo-700"
+                  >
                     {tech}
                   </li>
                 ))}
@@ -106,14 +117,16 @@ const ProjectDetailPage: FC = () => {
                 >
                   GitHub
                 </a>
-                <a
-                  href={project.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700"
-                >
-                  Live Demo
-                </a>
+                {project.demo && project.demo.trim().length > 0 && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded bg-indigo-600 px-4 py-2 font-semibold text-white transition hover:bg-indigo-700"
+                  >
+                    Live Demo
+                  </a>
+                )}
                 <Link
                   href="/projects"
                   className="inline-flex items-center gap-2 rounded border border-indigo-200 px-4 py-2 font-semibold text-indigo-600 transition hover:bg-indigo-50"

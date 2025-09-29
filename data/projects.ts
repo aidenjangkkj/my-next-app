@@ -20,7 +20,7 @@ const projects: ProjectDetail[] = [
       "Next.js 13(App Router)로 제작한 개인 포트폴리오/게시판. Firebase Firestore 기반 CRUD, Zustand로 UI/데이터 스토어 분리, Tailwind로 반응형 UI와 접근성을 강화했습니다.",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Zustand"],
     github: "https://github.com/aidenjangkkj/my-next-app",
-    demo: "", // TODO: 실제 배포 URL
+    demo: "https://my-next-app-one-chi.vercel.app/", // TODO: 실제 배포 URL
     image: "/images/projects/my-next-app.svg", // TODO: 실제 썸네일
   },
   {
@@ -31,7 +31,7 @@ const projects: ProjectDetail[] = [
       "다중 차트가 포함된 메트릭 대시보드. useMemo/가상화로 렌더 비용을 줄였고, 로딩 상태를 스켈레톤 컴포넌트로 표준화했습니다. Zustand로 UI/설정/데이터 스토어를 분리 설계.",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Zustand", "Recharts"],
     github: "https://github.com/aidenjangkkj/dashboard",
-    demo: "",
+    demo: "https://dashboard-omega-beige-25.vercel.app/",
     image: "/images/projects/dashboard.svg",
   },
   {
@@ -53,7 +53,7 @@ const projects: ProjectDetail[] = [
       "Next.js + LLM을 활용해 분기형 스토리/전투/버프/세이브를 지원하는 텍스트 RPG. 상태는 Zustand로 관리하며, 프롬프트/룰 설계로 일관된 세계관을 유지합니다.",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Zustand", "LLM API"],
     github: "https://github.com/aidenjangkkj/rpg-text-adventure",
-    demo: "",
+    demo: "https://rpg-text-adventure.vercel.app/",
     image: "/images/projects/rpg-text-adventure.svg",
   },
   {
