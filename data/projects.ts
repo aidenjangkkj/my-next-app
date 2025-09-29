@@ -166,7 +166,7 @@ const projects: ProjectDetail[] = [
     github: "https://github.com/aidenjangkkj/DEG",
     demo: "",
     image: "/images/projects/deg.svg",
-=======
+  },
     id: "next-portfolio",
     title: "Responsive Portfolio",
     description: "Landing page that showcases developer skills with responsive layouts and accessibility in mind.",
