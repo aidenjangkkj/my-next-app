@@ -11,12 +11,14 @@ const Projects: FC = () => {
   const [projects, setProjects] = useState<ProjectSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const [githubProjects, setGithubProjects] = useState<GitHubProject[]>([]);
   const [githubErrors, setGithubErrors] = useState<GitHubProjectError[]>([]);
   const [isGithubConfigured, setIsGithubConfigured] = useState(true);
   const [isGithubLoading, setIsGithubLoading] = useState(true);
   const [githubMessage, setGithubMessage] = useState<string | null>(null);
 
+  // ✅ projects 한 번만 선언
   const loadProjects = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -82,6 +84,7 @@ const Projects: FC = () => {
             ? err.message
             : "알 수 없는 이유로 GitHub 프로젝트 정보를 가져오지 못했어요.",
         );
+        // 토큰 미설정일 수 있으니 configured는 일단 true로 유지
         setIsGithubConfigured(true);
       } finally {
         setIsGithubLoading(false);
@@ -92,10 +95,7 @@ const Projects: FC = () => {
   }, []);
 
   const formattedGithubErrors = useMemo(() => {
-    if (githubErrors.length === 0) {
-      return null;
-    }
-
+    if (githubErrors.length === 0) return null;
     return githubErrors
       .map((item) => `• ${item.slug}: ${item.message}`)
       .join("\n");
@@ -109,33 +109,7 @@ const Projects: FC = () => {
       }),
     [],
   );
-  const loadProjects = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
 
-      const response = await fetch("/api/projects");
-      if (!response.ok) {
-        throw new Error("프로젝트 목록을 불러오지 못했습니다.");
-      }
-
-      const data: ProjectSummary[] = await response.json();
-      setProjects(data);
-    } catch (err) {
-      console.error("Error fetching projects:", err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : "알 수 없는 이유로 프로젝트 정보를 가져오지 못했어요.",
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void loadProjects();
-  }, [loadProjects]);
   return (
     <div>
       <Head>
@@ -168,7 +142,10 @@ const Projects: FC = () => {
               ))}
             </div>
           ) : error ? (
-            <div role="alert" className="mx-auto max-w-xl rounded-lg bg-red-50 p-6 text-left text-red-700">
+            <div
+              role="alert"
+              className="mx-auto max-w-xl rounded-lg bg-red-50 p-6 text-left text-red-700"
+            >
               <p className="font-semibold">프로젝트 정보를 불러오지 못했습니다.</p>
               <p className="mt-2 text-sm">{error}</p>
               <button
@@ -234,14 +211,20 @@ const Projects: FC = () => {
             <div className="rounded-xl border border-dashed border-indigo-400 bg-indigo-50 p-6 text-indigo-700">
               <p className="font-semibold">GitHub 프로젝트 연동이 비활성화되어 있습니다.</p>
               <p className="mt-2 text-sm leading-relaxed">
-                .env.local 파일에 <code className="rounded bg-white px-1 py-0.5">GITHUB_PROJECTS</code> 값을 추가하고,
-                필요하다면 <code className="rounded bg-white px-1 py-0.5">GITHUB_ACCESS_TOKEN</code> 또는
-                <code className="rounded bg-white px-1 py-0.5">GITHUB_TOKEN</code> 을 설정하면 바로 프로젝트가 표시됩니다.
+                .env.local 파일에{" "}
+                <code className="rounded bg-white px-1 py-0.5">GITHUB_PROJECTS</code> 값을 추가하고,
+                필요하다면{" "}
+                <code className="rounded bg-white px-1 py-0.5">GITHUB_ACCESS_TOKEN</code> 또는
+                <code className="rounded bg-white px-1 py-0.5">GITHUB_TOKEN</code> 을 설정하면 바로
+                프로젝트가 표시됩니다.
               </p>
               {githubMessage && <p className="mt-3 text-sm">{githubMessage}</p>}
             </div>
           ) : githubMessage && githubProjects.length === 0 ? (
-            <div role="alert" className="rounded-xl border border-yellow-300 bg-yellow-50 p-6 text-yellow-800">
+            <div
+              role="alert"
+              className="rounded-xl border border-yellow-300 bg-yellow-50 p-6 text-yellow-800"
+            >
               <p className="font-semibold">GitHub 프로젝트를 불러오지 못했습니다.</p>
               <p className="mt-2 text-sm leading-relaxed">{githubMessage}</p>
             </div>
@@ -305,7 +288,9 @@ const Projects: FC = () => {
                     </div>
                     <div>
                       <dt className="font-semibold text-gray-700">포크</dt>
-                      <dd className="mt-1 text-gray-600">{project.forks.toLocaleString("ko-KR")}</dd>
+                      <dd className="mt-1 text-gray-600">
+                        {project.forks.toLocaleString("ko-KR")}
+                      </dd>
                     </div>
                   </dl>
 
