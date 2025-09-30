@@ -52,7 +52,7 @@ export default function NewPost() {
   return (
     <div>
       <Head>
-        <title>새 글 작성 - My Portfolio</title>
+        <title>새 글 작성 · 포트폴리오</title>
         <meta name="description" content="게시판에 새로운 글을 작성하고 공유해 보세요." />
       </Head>
       <Navigation />
