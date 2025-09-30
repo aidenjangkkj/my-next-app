@@ -113,7 +113,7 @@ const Projects: FC = () => {
   return (
     <div>
       <Head>
-        <title>Projects - My Portfolio</title>
+        <title>프로젝트 · 포트폴리오</title>
         <meta
           name="description"
           content="Explore recent projects that highlight problem solving, accessibility, and modern web tooling."
@@ -122,7 +122,7 @@ const Projects: FC = () => {
       <Navigation />
       <main className="pt-24 pb-16 px-6 bg-gray-100 text-gray-900 min-h-screen">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">My Projects</h2>
+          <h2 className="text-3xl font-bold mb-4">개인 프로젝트</h2>
           <p className="mb-10 text-gray-600">
             프로젝트를 선택해 세부 기술 스택과 구현 사례를 확인해 보세요.
           </p>
@@ -176,7 +176,7 @@ const Projects: FC = () => {
                     href={`/projects/${project.id}`}
                     className="mt-auto inline-flex items-center text-indigo-600 font-semibold hover:underline"
                   >
-                    View Project →
+                    프로젝트 보기 →
                   </Link>
                 </article>
               ))}
@@ -184,9 +184,9 @@ const Projects: FC = () => {
           )}
         </div>
 
-        <section className="mx-auto mt-16 max-w-6xl rounded-2xl bg-white/80 p-8 shadow-lg">
+        {/* <section className="mx-auto mt-16 max-w-6xl rounded-2xl bg-white/80 p-8 shadow-lg">
           <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold text-gray-900">GitHub Projects</h2>
+            <h2 className="text-3xl font-bold text-gray-900">GitHub 프로젝트</h2>
             <p className="mt-2 text-gray-600">
               GitHub 저장소를 불러와 실시간으로 업데이트되는 작업 현황을 확인하세요.
             </p>
@@ -324,7 +324,7 @@ const Projects: FC = () => {
               {formattedGithubErrors}
             </pre>
           )}
-        </section>
+        </section> */}
       </main>
     </div>
   );

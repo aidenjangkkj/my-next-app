@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { FC, useState } from 'react';
 import '../app/globals.css';
 import Navigation from '@/components/Navigation';
+
 const Contact: FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -15,23 +16,23 @@ const Contact: FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Message sent by ${formData.name}`);
+    alert(`메시지가 ${formData.name} 님에 의해 전송되었습니다.`);
     setFormData({ name: '', email: '', message: '' });
   };
 
   return (
     <div>
       <Head>
-        <title>Contact Me - My Portfolio</title>
-        <meta name="description" content="Get in touch with me for collaborations or inquiries." />
+        <title>연락하기 - 나의 포트폴리오</title>
+        <meta name="description" content="협업이나 문의를 위해 저에게 연락해 보세요." />
       </Head>
       <Navigation />
       <section className="py-16 bg-gray-100 text-gray-900 flex flex-col items-center justify-center min-h-screen">
         <div className="max-w-4xl w-full px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Contact Me</h2>
+          <h2 className="text-3xl font-bold mb-8">연락하기</h2>
           <form className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg mx-auto" onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label className="block text-left font-semibold">Name</label>
+              <label className="block text-left font-semibold">이름</label>
               <input
                 type="text"
                 name="name"
@@ -42,7 +43,7 @@ const Contact: FC = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-left font-semibold">Email</label>
+              <label className="block text-left font-semibold">이메일</label>
               <input
                 type="email"
                 name="email"
@@ -53,7 +54,7 @@ const Contact: FC = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block text-left font-semibold">Message</label>
+              <label className="block text-left font-semibold">메시지</label>
               <textarea
                 name="message"
                 value={formData.message}
@@ -67,7 +68,7 @@ const Contact: FC = () => {
               type="submit"
               className="w-full py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition"
             >
-              Send Message
+              메시지 보내기
             </button>
           </form>
         </div>

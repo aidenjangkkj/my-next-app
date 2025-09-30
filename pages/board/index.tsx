@@ -45,7 +45,7 @@ const Board: FC = () => {
   return (
     <div>
       <Head>
-        <title>게시판 - My Portfolio</title>
+        <title>게시판 · 포트폴리오</title>
         <meta name="description" content="My Portfolio의 게시판 페이지입니다." />
       </Head>
       <Navigation />
