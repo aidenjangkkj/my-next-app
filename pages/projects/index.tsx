@@ -184,7 +184,7 @@ const Projects: FC = () => {
           )}
         </div>
 
-        {/* <section className="mx-auto mt-16 max-w-6xl rounded-2xl bg-white/80 p-8 shadow-lg">
+        <section className="mx-auto mt-16 max-w-6xl rounded-2xl bg-white/80 p-8 shadow-lg">
           <div className="mb-8 text-center">
             <h2 className="text-3xl font-bold text-gray-900">GitHub 프로젝트</h2>
             <p className="mt-2 text-gray-600">
@@ -324,7 +324,7 @@ const Projects: FC = () => {
               {formattedGithubErrors}
             </pre>
           )}
-        </section> */}
+        </section>
       </main>
     </div>
   );
