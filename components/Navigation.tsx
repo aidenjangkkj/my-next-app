@@ -3,7 +3,7 @@ import { FC } from "react";
 
 const Navigation: FC = () => {
   return (
-    <header className="p-4 bg-gray-800 text-white fixed w-full top-0 shadow-lg">
+    <header className="p-4 bg-gray-800 text-white fixed w-full top-0 shadow-lg z-50">
       <nav className="flex justify-between items-center max-w-6xl mx-auto">
         <h1 className="text-xl font-bold">
           <Link href="/">나의 포트폴리오</Link>
