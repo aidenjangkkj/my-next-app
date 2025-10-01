@@ -36,7 +36,7 @@ const Projects: FC = () => {
       setError(
         err instanceof Error
           ? err.message
-          : "알 수 없는 이유로 프로젝트 정보를 가져오지 못했어요.",
+          : "알 수 없는 이유로 프로젝트 정보를 가져오지 못했어요."
       );
     } finally {
       setIsLoading(false);
@@ -82,7 +82,7 @@ const Projects: FC = () => {
         setGithubMessage(
           err instanceof Error
             ? err.message
-            : "알 수 없는 이유로 GitHub 프로젝트 정보를 가져오지 못했어요.",
+            : "알 수 없는 이유로 GitHub 프로젝트 정보를 가져오지 못했어요."
         );
         // 토큰 미설정일 수 있으니 configured는 일단 true로 유지
         setIsGithubConfigured(true);
@@ -107,7 +107,7 @@ const Projects: FC = () => {
         dateStyle: "medium",
         timeStyle: "short",
       }),
-    [],
+    []
   );
 
   return (
@@ -128,7 +128,10 @@ const Projects: FC = () => {
           </p>
 
           {isLoading ? (
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3" aria-live="polite">
+            <div
+              className="grid grid-cols-1 gap-8 md:grid-cols-3"
+              aria-live="polite"
+            >
               {[0, 1, 2].map((index) => (
                 <div
                   key={index}
@@ -146,7 +149,9 @@ const Projects: FC = () => {
               role="alert"
               className="mx-auto max-w-xl rounded-lg bg-red-50 p-6 text-left text-red-700"
             >
-              <p className="font-semibold">프로젝트 정보를 불러오지 못했습니다.</p>
+              <p className="font-semibold">
+                프로젝트 정보를 불러오지 못했습니다.
+              </p>
               <p className="mt-2 text-sm">{error}</p>
               <button
                 type="button"
@@ -157,21 +162,43 @@ const Projects: FC = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3" aria-live="polite">
+            <div
+              className="grid grid-cols-1 gap-8 md:grid-cols-3"
+              aria-live="polite"
+            >
               {projects.map((project) => (
                 <article
                   key={project.id}
                   className="flex h-full flex-col rounded-lg bg-white p-6 text-left shadow-md transition hover:-translate-y-1 hover:shadow-xl"
                 >
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={640}
-                    height={400}
-                    className="mb-4 h-40 w-full rounded-lg object-cover"
-                  />
-                  <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                  <p className="mb-4 text-sm text-gray-600">{project.description}</p>
+                  <div className="relative">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      width={640}
+                      height={400}
+                      className="mb-4 h-40 w-full rounded-lg object-cover"
+                    />
+                    {project.framework && (
+                      <span className="absolute right-3 top-3 rounded-full bg-indigo-600/90 px-3 py-1 text-xs font-semibold text-white shadow">
+                        {project.framework}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <h3 className="text-xl font-semibold">{project.title}</h3>
+                    {project.framework && (
+                      <span className="hidden md:inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">
+                        {project.framework}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="mb-4 text-sm text-gray-600">
+                    {project.description}
+                  </p>
+
                   <Link
                     href={`/projects/${project.id}`}
                     className="mt-auto inline-flex items-center text-indigo-600 font-semibold hover:underline"
@@ -186,14 +213,20 @@ const Projects: FC = () => {
 
         <section className="mx-auto mt-16 max-w-6xl rounded-2xl bg-white/80 p-8 shadow-lg">
           <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold text-gray-900">GitHub 프로젝트</h2>
+            <h2 className="text-3xl font-bold text-gray-900">
+              GitHub 프로젝트
+            </h2>
             <p className="mt-2 text-gray-600">
-              GitHub 저장소를 불러와 실시간으로 업데이트되는 작업 현황을 확인하세요.
+              GitHub 저장소를 불러와 실시간으로 업데이트되는 작업 현황을
+              확인하세요.
             </p>
           </div>
 
           {isGithubLoading ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2" aria-live="polite">
+            <div
+              className="grid grid-cols-1 gap-6 md:grid-cols-2"
+              aria-live="polite"
+            >
               {[0, 1, 2, 3].map((index) => (
                 <div
                   key={`github-skeleton-${index}`}
@@ -209,14 +242,23 @@ const Projects: FC = () => {
             </div>
           ) : !isGithubConfigured ? (
             <div className="rounded-xl border border-dashed border-indigo-400 bg-indigo-50 p-6 text-indigo-700">
-              <p className="font-semibold">GitHub 프로젝트 연동이 비활성화되어 있습니다.</p>
+              <p className="font-semibold">
+                GitHub 프로젝트 연동이 비활성화되어 있습니다.
+              </p>
               <p className="mt-2 text-sm leading-relaxed">
                 .env.local 파일에{" "}
-                <code className="rounded bg-white px-1 py-0.5">GITHUB_PROJECTS</code> 값을 추가하고,
-                필요하다면{" "}
-                <code className="rounded bg-white px-1 py-0.5">GITHUB_ACCESS_TOKEN</code> 또는
-                <code className="rounded bg-white px-1 py-0.5">GITHUB_TOKEN</code> 을 설정하면 바로
-                프로젝트가 표시됩니다.
+                <code className="rounded bg-white px-1 py-0.5">
+                  GITHUB_PROJECTS
+                </code>{" "}
+                값을 추가하고, 필요하다면{" "}
+                <code className="rounded bg-white px-1 py-0.5">
+                  GITHUB_ACCESS_TOKEN
+                </code>{" "}
+                또는
+                <code className="rounded bg-white px-1 py-0.5">
+                  GITHUB_TOKEN
+                </code>{" "}
+                을 설정하면 바로 프로젝트가 표시됩니다.
               </p>
               {githubMessage && <p className="mt-3 text-sm">{githubMessage}</p>}
             </div>
@@ -225,15 +267,23 @@ const Projects: FC = () => {
               role="alert"
               className="rounded-xl border border-yellow-300 bg-yellow-50 p-6 text-yellow-800"
             >
-              <p className="font-semibold">GitHub 프로젝트를 불러오지 못했습니다.</p>
+              <p className="font-semibold">
+                GitHub 프로젝트를 불러오지 못했습니다.
+              </p>
               <p className="mt-2 text-sm leading-relaxed">{githubMessage}</p>
             </div>
           ) : githubProjects.length === 0 ? (
             <div className="rounded-xl border border-gray-200 bg-white p-6 text-center text-sm text-gray-600">
-              <p>지정된 저장소가 없습니다. .env.local 파일의 GITHUB_PROJECTS 값을 확인해 주세요.</p>
+              <p>
+                지정된 저장소가 없습니다. .env.local 파일의 GITHUB_PROJECTS 값을
+                확인해 주세요.
+              </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2" aria-live="polite">
+            <div
+              className="grid grid-cols-1 gap-6 md:grid-cols-2"
+              aria-live="polite"
+            >
               {githubProjects.map((project) => (
                 <article
                   key={project.slug}
@@ -248,16 +298,20 @@ const Projects: FC = () => {
                       className="mb-4 h-40 w-full rounded-lg object-cover"
                     />
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <h3 className="text-2xl font-semibold text-gray-900">{project.name}</h3>
+                      <h3 className="text-2xl font-semibold text-gray-900">
+                        {project.name}
+                      </h3>
                       <span className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-700">
                         ⭐ {project.stars.toLocaleString("ko-KR")}
                       </span>
                     </div>
                     <p className="mt-2 text-sm text-gray-600">
-                      {project.description ?? "설명이 제공되지 않은 저장소입니다."}
+                      {project.description ??
+                        "설명이 제공되지 않은 저장소입니다."}
                     </p>
 
-                    {(project.topics.length > 0 || project.languages.length > 0) && (
+                    {(project.topics.length > 0 ||
+                      project.languages.length > 0) && (
                       <div className="mt-4 flex flex-wrap gap-2">
                         {project.topics.map((topic) => (
                           <span
