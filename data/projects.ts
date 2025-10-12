@@ -102,11 +102,11 @@ const projects: ProjectDetail[] = [
   },
   {
     id: "TripApp",
-    title: "TripApp (React)",
+    title: "TripApp (Next.js + LLM)",
     description: "AI + 지도 연동 여행 일정 생성기.",
     longDescription:
       "사용자 입력을 바탕으로 일정 JSON을 생성하고, 장소/경로를 지도에 표시합니다. 좌표 파싱, 마커/폴리라인, 일자별 타임라인 UI를 제공합니다.",
-    techStack: ["React", "JavaScript", "Google Maps API", "LLM API"],
+    techStack: ["Next.js", "TypeScript", "MapBox API", "Gemini API"],
     framework: "React",
     github: "https://github.com/aidenjangkkj/trip-app-v2",
     demo: "https://trip-app-v2.vercel.app/",
