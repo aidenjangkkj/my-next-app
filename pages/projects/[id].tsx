@@ -7,10 +7,10 @@ import type { ProjectDetail } from "@/data/projects";
 import Navigation from "@/components/Navigation";
 import "../../app/globals.css";
 
+
 const ProjectDetailPage: FC = () => {
   const router = useRouter();
   const { id } = router.query;
-
   const [project, setProject] = useState<ProjectDetail | null>(null);
   const [status, setStatus] = useState<"loading" | "error" | "success">(
     "loading"
