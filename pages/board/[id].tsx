@@ -4,6 +4,12 @@ import { db } from "@/lib/firebase";
 import { GetServerSideProps } from "next";
 import Navigation from "@/components/Navigation";
 import "../../app/globals.css";
+import dynamic from "next/dynamic";
+
+const MarkdownRenderer = dynamic(
+  () => import("@/components/MarkdownRenderer"),
+  { ssr: true }
+);
 
 interface Post {
   id: string;
@@ -35,7 +41,7 @@ export default function PostDetail({ post }: PostProps) {
               <p className="text-gray-500 mb-4">
                 작성일: {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <div className="prose whitespace-pre-wrap break-words">{post.content}</div>
+              <MarkdownRenderer content={post.content} />
             </>
           ) : (
             <p>게시글을 찾을 수 없습니다.</p>
