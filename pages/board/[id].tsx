@@ -35,7 +35,7 @@ export default function PostDetail({ post }: PostProps) {
               <p className="text-gray-500 mb-4">
                 작성일: {new Date(post.createdAt).toLocaleDateString()}
               </p>
-              <div className="prose">{post.content}</div>
+              <div className="prose whitespace-pre-wrap break-words">{post.content}</div>
             </>
           ) : (
             <p>게시글을 찾을 수 없습니다.</p>
