@@ -41,6 +41,25 @@ const projects: ProjectDetail[] = [
     image: "/images/projects/dashboard.svg",
   },
   {
+  id: "trademark-search-spa",
+  title: "Trademark Search SPA",
+  description: "한국/미국 상표 데이터를 통합해서 검색·필터링·즐겨찾기할 수 있는 React SPA.",
+  longDescription:
+    "JSON 데이터를 Zod로 스키마 검증 후, 공통 도메인 모델(Trademark)로 변환해 검색·필터링·상세보기·즐겨찾기를 제공하는 SPA입니다. 국가별로 다른 스키마를 transform 계층에서 통합하고, Zustand로 검색 조건/뷰 모드/즐겨찾기 상태를 관리하며, Tailwind 기반 반응형 UI와 DateRangePicker, 상세 필터 토글, 즐겨찾기 전용 탭을 구현했습니다.",
+  techStack: [
+    "React",
+    "TypeScript",
+    "Vite",
+    "Tailwind CSS",
+    "Zustand",
+    "Zod"
+  ],
+  framework: "React",
+  github: "",
+  demo: "",
+  image: "/images/projects/trademark-search-spa.svg",
+},
+  {
     id: "community-mvp",
     title: "Community MVP",
     description: "가벼운 커뮤니티/게시판 최소기능제품.",
