@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Trademark Search SPA – KR/US Favorites</title>
+  <defs>
+    <style>
+      .bg-window { fill: #f4f0e8; }
+      .window { fill: #f9fafb; stroke: #111827; stroke-width: 4; stroke-linejoin: round; }
+      .topbar { fill: #e5e7eb; }
+      .dot-red { fill: #f97373; }
+      .dot-yellow { fill: #facc15; }
+      .dot-green { fill: #22c55e; }
+      .title { fill: #111827; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 700; letter-spacing: 0.08em; }
+      .label { fill: #374151; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 600; }
+      .text { fill: #4b5563; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .tab-bg { fill: #f9fafb; }
+      .tab-border { stroke: #111827; stroke-width: 3; }
+      .tab-active { fill: #e5e7eb; }
+      .tab-text { fill: #111827; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 600; }
+      .search-input { fill: #ffffff; stroke: #d1d5db; stroke-width: 3; }
+      .search-button { fill: #2563eb; }
+      .search-button-text { fill: #ffffff; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-weight: 600; }
+      .card { fill: #ffffff; stroke: #d1d5db; stroke-width: 3; stroke-linejoin: round; }
+      .badge { fill: #fef3c7; stroke: #fbbf24; stroke-width: 2; }
+      .badge-text { fill: #92400e; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 18px; font-weight: 600; }
+      .star-fill { fill: #fbbf24; stroke: #92400e; stroke-width: 3; stroke-linejoin: round; }
+      .star-line { fill: none; stroke: #e5e7eb; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- background -->
+  <rect class="bg-window" x="0" y="0" width="1024" height="1024" rx="40"/>
+
+  <!-- main window -->
+  <rect class="window" x="96" y="96" width="832" height="832" rx="32"/>
+
+  <!-- top bar -->
+  <rect class="topbar" x="96" y="96" width="832" height="72" rx="30" />
+  <circle class="dot-red" cx="136" cy="132" r="10"/>
+  <circle class="dot-yellow" cx="170" cy="132" r="10"/>
+  <circle class="dot-green" cx="204" cy="132" r="10"/>
+
+  <!-- title -->
+  <text class="title" x="512" y="150" font-size="30" text-anchor="middle">
+    TRADEMARK SEARCH SPA
+  </text>
+
+  <!-- tabs container outline -->
+  <g transform="translate(176 196)">
+    <!-- KR tab (active) -->
+    <rect class="tab-bg tab-border tab-active" x="0" y="0" width="110" height="52" rx="12"/>
+    <text class="tab-text" x="55" y="33" font-size="20" text-anchor="middle">KR</text>
+
+    <!-- US tab -->
+    <rect class="tab-bg tab-border" x="108" y="0" width="110" height="52" rx="12"/>
+    <text class="tab-text" x="163" y="33" font-size="20" text-anchor="middle">US</text>
+
+    <!-- Favorites tab -->
+    <rect class="tab-bg tab-border" x="216" y="0" width="160" height="52" rx="12"/>
+    <text class="tab-text" x="296" y="33" font-size="18" text-anchor="middle">Favorites</text>
+
+    <!-- Detailed Filters label -->
+    <text class="label" x="420" y="32" font-size="18">Detailed Filters</text>
+  </g>
+
+  <!-- Search label -->
+  <text class="label" x="176" y="284" font-size="20">Search Form</text>
+
+  <!-- Search input and button -->
+  <g transform="translate(176 300)">
+    <rect class="search-input" x="0" y="0" width="520" height="60" rx="14"/>
+    <rect class="search-button" x="540" y="0" width="130" height="60" rx="14"/>
+    <text class="search-button-text" x="605" y="38" font-size="20" text-anchor="middle">Search</text>
+  </g>
+
+  <!-- Korean card -->
+  <g transform="translate(176 388)">
+    <rect class="card" x="0" y="0" width="704" height="150" rx="20"/>
+    <!-- title line -->
+    <text class="label" x="28" y="46" font-size="32">KIMBO</text>
+    <!-- status badge -->
+    <rect class="badge" x="260" y="20" width="140" height="36" rx="18"/>
+    <text class="badge-text" x="330" y="44" text-anchor="middle">REGISTERED</text>
+
+    <!-- country / status -->
+    <text class="text" x="28" y="86" font-size="18">Application No. 4019950043843</text>
+    <text class="text" x="28" y="116" font-size="18">Country: KR</text>
+    <text class="text" x="260" y="116" font-size="18">Status: LIVE</text>
+
+    <!-- star -->
+    <polygon class="star-fill"
+      points="640,30 655,70 698,70 663,96 677,136 640,112 603,136 617,96 582,70 625,70" />
+  </g>
+
+  <!-- divider line -->
+  <line class="star-line" x1="192" y1="556" x2="864" y2="556"/>
+
+  <!-- US card -->
+  <g transform="translate(176 572)">
+    <rect class="card" x="0" y="0" width="704" height="150" rx="20"/>
+    <!-- title line -->
+    <text class="label" x="28" y="46" font-size="32">KIMBO</text>
+    <!-- status badge -->
+    <rect class="badge" x="260" y="20" width="120" height="36" rx="18"/>
+    <text class="badge-text" x="320" y="44" text-anchor="middle">REGISTER</text>
+
+    <!-- country / status -->
+    <text class="text" x="28" y="86" font-size="18">Application No. 75322388</text>
+    <text class="text" x="28" y="116" font-size="18">Country: US</text>
+    <text class="text" x="260" y="116" font-size="18">Status: LIVE</text>
+
+    <!-- star -->
+    <polygon class="star-fill"
+      points="640,30 655,70 698,70 663,96 677,136 640,112 603,136 617,96 582,70 625,70" />
+  </g>
+</svg>
