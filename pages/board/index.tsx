@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { getFirebaseDb } from "@/lib/firebase";
 import "../../app/globals.css";
 import Navigation from "@/components/Navigation";
 
@@ -20,7 +20,9 @@ const Board: FC = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "posts"));
+        const querySnapshot = await getDocs(
+          collection(getFirebaseDb(), "posts"),
+        );
         const postsData = querySnapshot.docs.map((doc) => {
           const data = doc.data();
           return {

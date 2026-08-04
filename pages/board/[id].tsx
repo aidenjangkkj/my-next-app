@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { getFirebaseDb } from "@/lib/firebase";
 import { GetServerSideProps } from "next";
 import Navigation from "@/components/Navigation";
 import "../../app/globals.css";
@@ -54,7 +54,7 @@ export default function PostDetail({ post }: PostProps) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
-  const docRef = doc(db, "posts", id as string);
+  const docRef = doc(getFirebaseDb(), "posts", id as string);
   const docSnap = await getDoc(docRef);
 
   let post = null;

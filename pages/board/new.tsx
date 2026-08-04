@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Navigation from "@/components/Navigation";
-import { db } from "@/lib/firebase";
+import { getFirebaseDb } from "@/lib/firebase";
 import "../../app/globals.css";
 
 export default function NewPost() {
@@ -28,7 +28,7 @@ export default function NewPost() {
       setIsSubmitting(true);
       setError(null);
 
-      await addDoc(collection(db, "posts"), {
+      await addDoc(collection(getFirebaseDb(), "posts"), {
         title: title.trim(),
         content: content.trim(),
         createdAt: serverTimestamp(),

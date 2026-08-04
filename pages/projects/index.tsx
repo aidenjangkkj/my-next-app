@@ -7,6 +7,15 @@ import type { GitHubProject, GitHubProjectError } from "@/lib/github";
 import Navigation from "@/components/Navigation";
 import "../../app/globals.css";
 
+async function fetchProjects(): Promise<ProjectSummary[]> {
+  const response = await fetch("/api/projects");
+  if (!response.ok) {
+    throw new Error("프로젝트 목록을 불러오지 못했습니다.");
+  }
+
+  return response.json();
+}
+
 const Projects: FC = () => {
   const [projects, setProjects] = useState<ProjectSummary[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,16 +30,7 @@ const Projects: FC = () => {
   // ✅ projects 한 번만 선언
   const loadProjects = useCallback(async () => {
     try {
-      setIsLoading(true);
-      setError(null);
-
-      const response = await fetch("/api/projects");
-      if (!response.ok) {
-        throw new Error("프로젝트 목록을 불러오지 못했습니다.");
-      }
-
-      const data: ProjectSummary[] = await response.json();
-      setProjects(data);
+      setProjects(await fetchProjects());
     } catch (err) {
       console.error("Error fetching projects:", err);
       setError(
@@ -44,8 +44,30 @@ const Projects: FC = () => {
   }, []);
 
   useEffect(() => {
-    void loadProjects();
-  }, [loadProjects]);
+    let isActive = true;
+
+    void fetchProjects()
+      .then((data) => {
+        if (isActive) setProjects(data);
+      })
+      .catch((err: unknown) => {
+        console.error("Error fetching projects:", err);
+        if (isActive) {
+          setError(
+            err instanceof Error
+              ? err.message
+              : "알 수 없는 이유로 프로젝트 정보를 가져오지 못했어요."
+          );
+        }
+      })
+      .finally(() => {
+        if (isActive) setIsLoading(false);
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   useEffect(() => {
     const loadGithubProjects = async () => {
@@ -155,7 +177,11 @@ const Projects: FC = () => {
               <p className="mt-2 text-sm">{error}</p>
               <button
                 type="button"
-                onClick={loadProjects}
+                onClick={() => {
+                  setIsLoading(true);
+                  setError(null);
+                  void loadProjects();
+                }}
                 className="mt-4 rounded bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
               >
                 다시 시도하기
