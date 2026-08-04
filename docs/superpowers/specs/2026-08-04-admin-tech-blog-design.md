@@ -47,7 +47,7 @@
                          -> Firestore posts 쓰기
 ```
 
-관리자는 Google 계정 이메일 한 개로 판별한다. 클라이언트는 Vercel의 `NEXT_PUBLIC_FIREBASE_ADMIN_EMAIL` 환경 변수와 로그인 계정을 비교해 권한 없는 화면 접근을 막는다. Firestore Rules에도 같은 관리자 이메일 조건을 적용해 브라우저 코드 우회 쓰기를 차단한다. 관리자 이메일은 비밀번호가 아니며, 실제 인증은 Firebase가 발급한 검증된 인증 토큰으로 판단한다.
+관리자는 Google 로그인으로 발급된 Firebase Auth UID 한 개로 판별한다. Firebase Console에서 `admins/{uid}` 문서 하나를 수동으로 생성한다. 클라이언트는 로그인한 사용자의 관리자 문서 존재 여부로 화면 접근을 제어하고, Firestore Rules도 같은 문서 존재 여부로 브라우저 코드 우회 쓰기를 차단한다.
 
 ## 라우트
 
@@ -95,17 +95,19 @@ interface BlogPost {
 3. 로그인했지만 관리자 계정이 아님
 4. 관리자 접근 허용
 
-Google 로그인 성공 후 계정 이메일이 관리자 환경 변수와 일치해야 관리자 화면을 렌더링한다. 일치하지 않으면 권한 없음 안내와 로그아웃만 제공한다.
+Google 로그인 성공 후 `admins/{uid}` 문서가 존재해야 관리자 화면을 렌더링한다. 문서가 없으면 권한 없음 안내와 로그아웃만 제공한다.
 
 Firestore Rules 정책은 다음과 같다.
 
 - `posts` 읽기: 모든 사용자 허용
-- `posts` 생성·수정·삭제: 인증된 관리자 이메일만 허용
+- `posts` 생성·수정·삭제: 로그인 UID에 대응하는 `admins/{uid}` 문서가 존재할 때만 허용
+- `admins/{uid}` 읽기: 로그인 사용자가 자신의 문서만 조회 가능
+- `admins` 쓰기: 클라이언트에서 모두 금지하고 Firebase Console에서만 관리
 - 다른 컬렉션: 기존 규칙을 유지하되 이번 기능에서 권한을 확장하지 않음
 
 저장소에는 현재 배포된 Firestore Rules가 없으므로 기존 Production Rules를 먼저 확인하고 백업한 다음 `posts` 규칙만 병합한다. 확인되지 않은 전체 규칙 파일로 Production 설정을 덮어쓰지 않는다.
 
-Vercel Production, Preview, Development 환경에 Firebase 공개 설정과 관리자 이메일을 각각 설정한다. 환경 변수 변경 후에는 새 배포가 필요하다.
+Vercel Production, Preview, Development 환경에 Firebase 공개 설정을 각각 설정한다. 환경 변수 변경 후에는 새 배포가 필요하다. 관리자로 사용할 Google 계정으로 한 번 로그인해 UID를 확인한 뒤 Firebase Console에서 `admins/{uid}` 문서 하나를 생성한다.
 
 ## 공개 UI·UX
 
@@ -135,7 +137,7 @@ Vercel Production, Preview, Development 환경에 Firebase 공개 설정과 관�
 
 ### 작성
 
-1. 관리자 인증과 이메일을 확인한다.
+1. 관리자 인증과 `admins/{uid}` 문서 존재 여부를 확인한다.
 2. 제목과 본문 공백, 유효한 작성일을 검증한다.
 3. 지정 작성일을 `Timestamp`로 변환한다.
 4. Firestore에 새 문서를 추가한다.
@@ -178,7 +180,7 @@ npm run build
 
 추가 핵심 검증:
 
-- 관리자 이메일이 아닌 계정은 관리자 기능을 사용할 수 없음
+- `admins/{uid}` 문서가 없는 계정은 관리자 기능을 사용할 수 없음
 - 로그아웃 사용자는 관리자 작성 URL에서 로그인 화면으로 이동
 - 작성일을 변경해 저장하면 공개 목록 정렬과 표시가 반영됨
 - 수정 후 `updatedAt`이 표시됨
