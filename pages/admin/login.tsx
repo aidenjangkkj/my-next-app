@@ -7,9 +7,7 @@ import {
   signInWithPopup,
   type AuthError,
 } from "firebase/auth";
-import Navigation from "@/components/Navigation";
 import { getFirebaseAuth } from "@/lib/firebase";
-import "../../app/globals.css";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -39,9 +37,8 @@ export default function AdminLogin() {
     <div>
       <Head>
         <title>관리자 로그인 · 기술 블로그</title>
-        <meta name="description" content="기술 블로그 관리자 로그인" />
+        <meta name="description" content="기술 블로그 관리자 로그인" key="description" />
       </Head>
-      <Navigation />
       <main className="min-h-screen bg-gray-100 px-6 pb-16 pt-28 text-gray-900">
         <section className="mx-auto max-w-md rounded-xl bg-white p-8 shadow-md">
           <p className="text-sm font-semibold uppercase tracking-wider text-indigo-600">

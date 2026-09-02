@@ -5,10 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import { signOut } from "firebase/auth";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import AdminGuard from "@/components/AdminGuard";
-import Navigation from "@/components/Navigation";
 import { mapBlogPost, sortBlogPosts, type BlogPost } from "@/lib/blog";
 import { getFirebaseAuth, getFirebaseDb } from "@/lib/firebase";
-import "../../../app/globals.css";
 
 async function fetchPosts() {
   const snapshot = await getDocs(collection(getFirebaseDb(), "posts"));
@@ -187,7 +185,6 @@ export default function AdminPosts() {
       <Head>
         <title>게시글 관리 · 기술 블로그</title>
       </Head>
-      <Navigation />
       <main className="min-h-screen bg-gray-100 px-6 pb-16 pt-28 text-gray-900">
         <div className="mx-auto max-w-5xl">
           <AdminGuard>

@@ -1,227 +1,230 @@
 export interface ProjectDetail {
   id: string;
   title: string;
-  description: string;
-  longDescription: string;
+  category: "selected" | "archive";
+  period: string;
+  role: string;
+  summary: string;
+  problem: string;
+  contribution: string[];
+  result: string[];
+  limitations: string[];
   techStack: string[];
-  framework: string; // ✅ 주요 프레임워크 추가
-  github: string;
-  demo: string;
-  image: string;
+  github?: string;
+  demo?: string;
+  relatedCaseStudies: string[];
+  links?: { label: string; href: string }[];
 }
 
-export type ProjectSummary = Pick<
-  ProjectDetail,
-  "id" | "title" | "description" | "image" | "framework"
->;
+const archiveDefaults = {
+  category: "archive" as const,
+  period: "기록 미확인",
+  role: "개인 프로젝트 · 세부 기여 기록 미확인",
+  summary: "초기 개인 프로젝트 기록입니다. 현재 기능과 기여 범위는 재검증 전입니다.",
+  problem: "당시 학습과 실험의 기록을 보관합니다. 상세한 문제 정의는 기록 미확인입니다.",
+  contribution: [],
+  result: [],
+  limitations: ["대표 프로젝트와 분리한 아카이브입니다. 구현 완성도·운영 성과·배포 상태를 보증하지 않습니다."],
+  techStack: [],
+  relatedCaseStudies: [],
+};
 
-const projects: ProjectDetail[] = [
-  {
-    id: "my-next-app",
-    title: "My Next App (Portfolio & Board)",
-    description: "Next.js 기반 포트폴리오 + 게시판 웹앱.",
-    longDescription:
-      "Next.js 13(App Router)로 제작한 개인 포트폴리오/게시판. Firebase Firestore 기반 CRUD, Zustand로 UI/데이터 스토어 분리, Tailwind로 반응형 UI와 접근성을 강화했습니다.",
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Firebase", "Zustand"],
-    framework: "Next.js",
-    github: "https://github.com/aidenjangkkj/my-next-app",
-    demo: "https://my-next-app-one-chi.vercel.app/",
-    image: "/images/projects/my-next-app.svg",
-  },
+export const projects: ProjectDetail[] = [
   {
     id: "dashboard",
-    title: "Dashboard",
-    description: "차트 중심의 대시보드. 성능 최적화와 스켈레톤 UI 적용.",
-    longDescription:
-      "다중 차트가 포함된 메트릭 대시보드. useMemo/가상화로 렌더 비용을 줄였고, 로딩 상태를 스켈레톤 컴포넌트로 표준화했습니다. Zustand로 UI/설정/데이터 스토어를 분리 설계.",
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Zustand", "Recharts"],
-    framework: "Next.js",
+    title: "Emissions Dashboard",
+    category: "selected",
+    period: "기록 미확인",
+    role: "개인 프로젝트 · 대시보드 UI와 데이터 흐름 구현",
+    summary: "국가·기업별 샘플 배출량을 차트로 탐색하고, 환율 조회와 메모 저장 실패를 다룬 대시보드입니다.",
+    problem: "배출량의 추이·구성·목표를 여러 관점으로 보여주면서, 데이터 조회와 메모 저장의 로딩·실패 상태를 구분할 필요가 있었습니다.",
+    contribution: [
+      "월별 추이, 에너지원 비중, 누적 막대, Top N, 목표 대비 실제 차트를 구성하고 단위 변환과 기간·목표 설정 UI를 연결했습니다.",
+      "Zustand에서 데이터·UI·환율 설정 상태를 나누고, 조회 오류와 저장 오류를 별도로 관리했습니다.",
+      "메모 저장의 낙관적 갱신·실패 시 롤백·토스트 재시도 경로와 섹션별 스켈레톤을 구현했습니다.",
+      "환율 Route Handler에 외부 API 조회와 실패 시 USD/KRW 기본값 반환을 구현했습니다.",
+    ],
+    result: [
+      "다섯 종류의 차트와 국가·기업 상세 화면을 갖춘 공개 데모를 구성했습니다.",
+      "지연과 저장 실패를 발생시키는 샘플 API로 로딩·저장·오류 UI를 실험할 수 있게 했습니다.",
+    ],
+    limitations: [
+      "배출량은 seed 데이터이며 메모는 메모리에만 저장됩니다. 실서비스 데이터 수집이나 서버 영속 저장을 구현한 프로젝트는 아닙니다.",
+      "환율 API 실패 시 기본값을 사용하므로 실제 환율이나 세금 계산의 정확성을 보장하지 않습니다.",
+      "공개 소스 확인 기준입니다. 운영 규모·성능 개선 수치와 전체 UI 흐름의 실행 결과는 별도로 검증하지 않았습니다.",
+    ],
+    techStack: ["Next.js 15 (App Router)", "React 19", "TypeScript", "Tailwind CSS", "Zustand", "Recharts"],
     github: "https://github.com/aidenjangkkj/dashboard",
     demo: "https://dashboard-omega-beige-25.vercel.app/",
-    image: "/images/projects/dashboard.svg",
-  },
-  {
-  id: "trademark-search-spa",
-  title: "Trademark Search SPA",
-  description: "한국/미국 상표 데이터를 통합해서 검색·필터링·즐겨찾기할 수 있는 React SPA.",
-  longDescription:
-    "JSON 데이터를 Zod로 스키마 검증 후, 공통 도메인 모델(Trademark)로 변환해 검색·필터링·상세보기·즐겨찾기를 제공하는 SPA입니다. 국가별로 다른 스키마를 transform 계층에서 통합하고, Zustand로 검색 조건/뷰 모드/즐겨찾기 상태를 관리하며, Tailwind 기반 반응형 UI와 DateRangePicker, 상세 필터 토글, 즐겨찾기 전용 탭을 구현했습니다.",
-  techStack: [
-    "React",
-    "TypeScript",
-    "Vite",
-    "Tailwind CSS",
-    "Zustand",
-    "Zod"
-  ],
-  framework: "React",
-  github: "",
-  demo: "",
-  image: "/images/projects/trademark-search-spa.svg",
-},
-  {
-    id: "community-mvp",
-    title: "Community MVP",
-    description: "가벼운 커뮤니티/게시판 최소기능제품.",
-    longDescription:
-      "게시글/댓글/프로필 같은 필수 기능만 담은 커뮤니티 MVP. 폴더 구조, 타입 설계, 폼 유효성 검증 등 기본기를 단단히 하는 데 초점.",
-    techStack: ["React Native", "TypeScript", "Nativewind", "Firebase"],
-    framework: "React Native",
-    github: "https://github.com/aidenjangkkj/community-mvp",
-    demo: "",
-    image: "/images/projects/community-mvp.svg",
-  },
-  {
-    id: "rpg-text-adventure",
-    title: "RPG Text Adventure",
-    description: "AI 기반 텍스트 어드벤처 게임.",
-    longDescription:
-      "Next.js + LLM을 활용해 분기형 스토리/전투/버프/세이브를 지원하는 텍스트 RPG. 상태는 Zustand로 관리하며, 프롬프트/룰 설계로 일관된 세계관을 유지합니다.",
-    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Zustand", "LLM API"],
-    framework: "Next.js",
-    github: "https://github.com/aidenjangkkj/rpg-text-adventure",
-    demo: "https://rpg-text-adventure.vercel.app/",
-    image: "/images/projects/rpg-text-adventure.svg",
-  },
-  {
-    id: "review",
-    title: "Review Tools",
-    description: "리뷰 분석 및 자동 응답 실험용 스크립트.",
-    longDescription:
-      "리뷰 텍스트 전처리, 감성/키워드 분석, 템플릿 기반 자동 응답을 실험하는 유틸리티. CLI 중심으로 빠르게 반복 실험하기 위한 구조.",
-    techStack: ["Node.js", "JavaScript"],
-    framework: "Node.js",
-    github: "https://github.com/aidenjangkkj/review",
-    demo: "",
-    image: "/images/projects/review.svg",
-  },
-  {
-    id: "my-chat-app",
-    title: "My Chat App",
-    description: "실시간 채팅 클라이언트.",
-    longDescription:
-      "Socket.io 기반 실시간 채팅 UI. 메시지 스트림, 읽음 처리, 타이핑 인디케이터 등 기본 기능을 TypeScript로 견고하게 구현했습니다.",
-    techStack: ["React", "TypeScript", "Socket.io", "Tailwind CSS"],
-    framework: "React",
-    github: "https://github.com/aidenjangkkj/my-chat-app",
-    demo: "",
-    image: "/images/projects/my-chat-app.svg",
-  },
-  {
-    id: "my-chat-server",
-    title: "My Chat Server",
-    description: "실시간 채팅 서버 (Socket.io).",
-    longDescription:
-      "채팅방/사용자 세션/이벤트 브로드캐스트를 담당하는 Node.js 서버. 다중 룸, 인증 훅, 메시지 보존 전략 등을 실험합니다.",
-    techStack: ["Node.js", "TypeScript", "Socket.io", "Express"],
-    framework: "Node.js",
-    github: "https://github.com/aidenjangkkj/my-chat-server",
-    demo: "",
-    image: "/images/projects/my-chat-server.svg",
+    relatedCaseStudies: [],
   },
   {
     id: "TripApp",
-    title: "TripApp (Next.js + LLM)",
-    description: "AI + 지도 연동 여행 일정 생성기.",
-    longDescription:
-      "사용자 입력을 바탕으로 일정 JSON을 생성하고, 장소/경로를 지도에 표시합니다. 좌표 파싱, 마커/폴리라인, 일자별 타임라인 UI를 제공합니다.",
-    techStack: ["Next.js", "TypeScript", "MapBox API", "Gemini API"],
-    framework: "Next.js",
+    title: "TripApp v2",
+    category: "selected",
+    period: "기록 미확인",
+    role: "개인 프로젝트 · 일정 편집 UI와 생성 API 구현",
+    summary: "Gemini로 생성한 여행 일정을 검증하고, Mapbox 지도와 드래그 편집·개별 재추천 UI로 연결한 플래너입니다.",
+    problem: "모델 응답을 그대로 화면에 사용하는 대신 구조를 검증하고, 좌표가 없는 장소를 보강하며, 생성 후에도 사용자가 일정을 수정할 수 있어야 했습니다.",
+    contribution: [
+      "일정 생성 Route Handler에서 Zod로 입력과 출력 구조를 검증하고, 응답에서 JSON 구간을 추출해 다시 파싱하는 처리를 구현했습니다.",
+      "장소의 누락 좌표를 지오코딩 API로 보강하고 Mapbox의 장소 표시·선택 강조·장소 간 연결선으로 시각화했습니다.",
+      "dnd-kit으로 일정 순서 변경을 구현하고, 개별 재추천의 로딩·오류·미리보기·교체 흐름을 구성했습니다.",
+      "대안 요청 API에 세 개의 후보를 검증하는 스키마와 후보 선택 UI를 구현했습니다.",
+    ],
+    result: [
+      "입력 → 일정 생성 → 지도 확인 → 항목 편집으로 이어지는 화면과 API 코드를 공개했습니다.",
+      "일정 전체를 다시 만드는 대신 항목 단위로 재추천 결과를 확인하고 교체하는 흐름을 구성했습니다.",
+    ],
+    limitations: [
+      "지도 선은 좌표를 순서대로 잇는 표현이며 실제 길찾기나 교통수단별 경로 계산은 아닙니다.",
+      "JSON 구간 추출은 잘못된 JSON 문법을 일반적으로 복구하는 기능이 아닙니다. 생성 내용과 장소 좌표의 사실성도 별도 확인이 필요합니다.",
+      "Gemini·Mapbox 키와 외부 API 상태에 의존합니다. 현재 배포의 유료 API 호출·생성 품질·전체 편집 흐름은 실행 검증하지 않았습니다.",
+    ],
+    techStack: ["Next.js 16 (App Router)", "React 19", "TypeScript", "Tailwind CSS", "Gemini API", "Mapbox GL JS", "Zod", "dnd-kit"],
     github: "https://github.com/aidenjangkkj/trip-app-v2",
     demo: "https://trip-app-v2.vercel.app/",
-    image: "/images/projects/tripapp.svg",
+    relatedCaseStudies: [],
   },
   {
+    id: "rn-webbridge",
+    title: "RN WebBridge Demo",
+    category: "selected",
+    period: "기록 미확인",
+    role: "개인 프로젝트 · React Native WebView와 네이티브 API 연동",
+    summary: "WebView 브릿지의 요청·응답과 광고 ID 조회를 분리해 실험한 React Native·Expo 앱입니다.",
+    problem: "웹 화면에서 네이티브 정보를 요청하는 통신 경계와, OS 권한·조회 실패에 따라 결과가 달라지는 광고 ID 처리를 확인하고자 했습니다.",
+    contribution: [
+      "일반 WebView, 브릿지, 광고 ID 조회를 세 개의 탭 화면으로 분리했습니다.",
+      "requestInfo의 응답 타입을 명시하고 네트워크 상태·난수를 네이티브 패널에 반영한 뒤 브릿지 응답으로 반환했습니다.",
+      "iOS ATT 상태 확인·필요 시 권한 요청·거부 분기와 광고 ID 조회 실패·결과 가리기 UI를 구현했습니다.",
+      "Expo 설정에 iOS 권한 설명과 Android AD_ID 권한을 추가하고, EAS preview APK 빌드 프로필을 구성했습니다.",
+    ],
+    result: [
+      "네이티브 정보 요청과 응답을 확인하는 브릿지 화면, 광고 ID 상태를 확인하는 별도 화면을 공개 코드로 남겼습니다.",
+      "브릿지 응답 타입과 권한 처리 분기를 확인할 수 있는 작은 연동 실험으로 정리했습니다.",
+    ],
+    limitations: [
+      "브릿지가 연결하는 웹 측 소스는 이 저장소에 포함되어 있지 않습니다. 양쪽 타입 공유나 종단 간 동작을 검증한 것으로 해석하지 않습니다.",
+      "Android의 추적 제한 판정은 null 여부만 확인합니다. 모든 광고 ID 제한 상태를 포괄한다고 볼 수 없습니다.",
+      "실기기 권한·광고 ID 반환·APK 설치는 재검증하지 않았습니다. 회사 프로젝트의 광고 SDK 구현 사례와는 별개의 개인 실험입니다.",
+    ],
+    techStack: ["React Native", "Expo", "TypeScript", "React Native WebView", "webview-bridge", "expo-network", "expo-tracking-transparency", "NativeWind"],
+    github: "https://github.com/aidenjangkkj/RN_ADID_Bridge",
+    relatedCaseStudies: [],
+  },
+  {
+    ...archiveDefaults,
+    id: "my-next-app",
+    title: "Portfolio & Board",
+    role: "개인 포트폴리오 개발·유지보수",
+    summary: "경력 사례와 개인 프로젝트를 정리하고 Firebase 게시판·블로그를 운영하는 포트폴리오입니다.",
+    problem: "경력 사례와 개인 실험을 구분하고, 프로젝트 설명과 링크를 일관된 데이터로 관리할 공간이 필요했습니다.",
+    contribution: ["Next.js Pages Router 기반 페이지와 Firebase 연동 게시판·블로그를 구성했습니다."],
+    result: ["경력 사례와 대표·아카이브 프로젝트를 나누어 탐색할 수 있는 포트폴리오를 구성했습니다."],
+    limitations: ["개발 기간은 기록 미확인입니다. 서비스 운영 성과나 방문자 지표는 제시하지 않습니다."],
+    techStack: ["Next.js 16 (Pages Router)", "React 19", "TypeScript", "Firebase", "Tailwind CSS"],
+    github: "https://github.com/aidenjangkkj/my-next-app",
+    demo: "https://jang-portfolio-one-chi.vercel.app/",
+  },
+  {
+    ...archiveDefaults,
+    id: "trademark-search-spa",
+    title: "Trademark Search SPA",
+  },
+  {
+    ...archiveDefaults,
+    id: "community-mvp",
+    title: "Community MVP",
+    github: "https://github.com/aidenjangkkj/community-mvp",
+  },
+  {
+    ...archiveDefaults,
+    id: "rpg-text-adventure",
+    title: "RPG Text Adventure",
+    github: "https://github.com/aidenjangkkj/rpg-text-adventure",
+  },
+  {
+    ...archiveDefaults,
+    id: "review",
+    title: "Review",
+    github: "https://github.com/aidenjangkkj/review",
+  },
+  {
+    ...archiveDefaults,
+    id: "my-chat-app",
+    title: "My Chat App",
+    github: "https://github.com/aidenjangkkj/my-chat-app",
+  },
+  {
+    ...archiveDefaults,
+    id: "my-chat-server",
+    title: "My Chat Server",
+    github: "https://github.com/aidenjangkkj/my-chat-server",
+  },
+  {
+    ...archiveDefaults,
     id: "Gamelist",
-    title: "Gamelist (SpringBoot CRUD)",
-    description: "게임 목록 관리 CRUD 백엔드.",
-    longDescription:
-      "Spring Boot + JPA로 CRUD API를 제공. 계층화된 구조(Controller/Service/Repository)와 예외/검증/DTO 매핑을 정리했습니다.",
-    techStack: ["Java", "Spring Boot", "JPA", "MySQL"],
-    framework: "Spring Boot",
+    title: "Gamelist",
     github: "https://github.com/aidenjangkkj/Gamelist",
-    demo: "",
-    image: "/images/projects/gamelist.svg",
   },
   {
+    ...archiveDefaults,
     id: "food-appp",
-    title: "Food App (React Native)",
-    description: "배달 플랫폼 프로토타입(모바일).",
-    longDescription:
-      "역할 분리 UI(점주/고객), 메뉴/장바구니/주문 흐름, Firebase 인증/Firestore 연동을 갖춘 RN 앱. 추후 Electron 확장과 실시간 동기화를 고려한 구조.",
-    techStack: ["React Native", "Expo", "Firebase"],
-    framework: "React Native",
+    title: "Food App",
     github: "https://github.com/aidenjangkkj/food-appp",
-    demo: "",
-    image: "/images/projects/food-appp.svg",
   },
   {
+    ...archiveDefaults,
     id: "del-electron-app",
     title: "Delivery Electron App",
-    description: "주문 수신·출력용 Electron 데스크톱.",
-    longDescription:
-      "주문과 연동되는 데스크톱 클라이언트. 시리얼 포트를 통한 영수증 프린터 출력, 주문 알림/처리 플로우를 제공합니다.",
-    techStack: ["Electron", "JavaScript", "SerialPort"],
-    framework: "Electron",
-    github: "https://github.com/aidenjangkkj/del-electron-app",
-    demo: "",
-    image: "/images/projects/del-electron-app.svg",
   },
   {
+    ...archiveDefaults,
     id: "del-frontend",
-    title: "Delivery Frontend (Web)",
-    description: "배달 서비스 웹 프론트엔드.",
-    longDescription:
-      "점주 대시보드/주문 현황/메뉴 관리 등 웹 화면. React 기반 상태 관리와 Firebase/백엔드 API 연동으로 실시간 주문 흐름을 지원합니다.",
-    techStack: ["React", "JavaScript", "Tailwind CSS", "Firebase"],
-    framework: "React",
+    title: "Delivery Frontend",
     github: "https://github.com/aidenjangkkj/del-frontend",
-    demo: "",
-    image: "/images/projects/del-frontend.svg",
   },
   {
+    ...archiveDefaults,
     id: "Responsive",
     title: "Responsive Web",
-    description: "반응형 레이아웃 연습.",
-    longDescription:
-      "모바일 퍼스트로 그리드/타이포 스케일/접근성(시맨틱 태그, 키보드 포커스)을 점검하며 반응형 컴포넌트를 정리했습니다.",
-    techStack: ["HTML", "CSS", "JavaScript"],
-    framework: "HTML/CSS",
     github: "https://github.com/aidenjangkkj/Responsive",
-    demo: "",
-    image: "/images/projects/responsive.svg",
   },
   {
+    ...archiveDefaults,
     id: "DEG",
-    title: "DEG (2D Game by Python)",
-    description: "파이썬 2D 게임.",
-    longDescription:
-      "Pygame으로 2D 게임 루프/스프라이트/충돌 처리 및 각종 로직을 구현하며 게임 아키텍처 기초를 정리했습니다.",
-    techStack: ["Python", "Pygame"],
-    framework: "Pygame",
+    title: "DEG",
     github: "https://github.com/aidenjangkkj/DEG",
-    demo: "",
-    image: "/images/projects/deg.svg",
   },
 ];
 
-export const projectSummaries: ProjectSummary[] = projects.map(
-  ({ id, title, description, image, framework }) => ({
-    id,
-    title,
-    description,
-    image,
-    framework,
-  }),
-);
-
-export const projectDictionary = projects.reduce<Record<string, ProjectDetail>>(
-  (acc, project) => {
-    acc[project.id] = project;
-    return acc;
-  },
-  {},
-);
+export const selectedProjects = projects.filter(({ category }) => category === "selected");
+export const archivedProjects = projects.filter(({ category }) => category === "archive");
 
 export const getProjectById = (id: string): ProjectDetail | undefined =>
-  projectDictionary[id];
+  projects.find((project) => project.id === id);
+
+export const getProjectStaticPaths = (): { params: { id: string } }[] =>
+  projects.map(({ id }) => ({ params: { id } }));
+
+export function getProjectPageData(id: unknown): { props: { project: ProjectDetail } } | { notFound: true } {
+  const project = typeof id === "string" ? getProjectById(id) : undefined;
+  return project ? { props: { project } } : { notFound: true };
+}
+
+export function getProjectLinks(project: ProjectDetail): { label: string; href: string }[] {
+  return [
+    { label: "GitHub", href: project.github ?? "" },
+    { label: "Demo", href: project.demo ?? "" },
+    ...(project.links ?? []),
+  ].filter(({ label, href }) => {
+    if (!label.trim() || !href.trim()) return false;
+    try {
+      const { protocol } = new URL(href);
+      return protocol === "https:" || protocol === "http:";
+    } catch {
+      return false;
+    }
+  });
+}

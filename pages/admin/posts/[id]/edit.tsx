@@ -10,7 +10,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import AdminGuard from "@/components/AdminGuard";
-import Navigation from "@/components/Navigation";
 import PostForm from "@/components/PostForm";
 import {
   fromDateTimeLocal,
@@ -19,7 +18,6 @@ import {
   toDateTimeLocal,
 } from "@/lib/blog";
 import { getFirebaseDb } from "@/lib/firebase";
-import "../../../../app/globals.css";
 
 async function fetchPost(postId: string): Promise<PostFormValues | null> {
   const postSnapshot = await getDoc(doc(getFirebaseDb(), "posts", postId));
@@ -136,7 +134,6 @@ export default function EditAdminPost() {
       <Head>
         <title>글 수정 · 블로그 관리</title>
       </Head>
-      <Navigation />
       <main className="min-h-screen bg-gray-100 px-6 pb-16 pt-28 text-gray-900">
         <div className="mx-auto max-w-4xl">
           <AdminGuard>

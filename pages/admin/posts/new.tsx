@@ -3,11 +3,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import AdminGuard from "@/components/AdminGuard";
-import Navigation from "@/components/Navigation";
 import PostForm from "@/components/PostForm";
 import { fromDateTimeLocal, toDateTimeLocal } from "@/lib/blog";
 import { getFirebaseDb } from "@/lib/firebase";
-import "../../../app/globals.css";
 
 export default function NewAdminPost() {
   const router = useRouter();
@@ -17,7 +15,6 @@ export default function NewAdminPost() {
       <Head>
         <title>새 글 작성 · 블로그 관리</title>
       </Head>
-      <Navigation />
       <main className="min-h-screen bg-gray-100 px-6 pb-16 pt-28 text-gray-900">
         <div className="mx-auto max-w-4xl">
           <AdminGuard>

@@ -1,8 +1,7 @@
-import Head from "next/head";
+import Seo from "@/components/Seo";
 import Link from "next/link";
 import type { GetServerSideProps } from "next";
 import { collection, getDocs } from "firebase/firestore";
-import Navigation from "@/components/Navigation";
 import {
   createExcerpt,
   mapBlogPost,
@@ -10,7 +9,7 @@ import {
   type BlogPost,
 } from "@/lib/blog";
 import { getFirebaseDb } from "@/lib/firebase";
-import "../../app/globals.css";
+import { getCaseStudyByPostId } from "@/data/caseStudies";
 
 interface BlogPageProps {
   posts: BlogPost[];
@@ -27,43 +26,29 @@ const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
 export default function Blog({ posts, error }: BlogPageProps) {
   return (
     <div>
-      <Head>
-        <title>기술 블로그 · 포트폴리오</title>
-        <meta
-          name="description"
-          content="프로젝트에서 배운 기술과 문제 해결 과정을 기록하는 개인 기술 블로그입니다."
-        />
-      </Head>
-      <Navigation />
-      <main className="min-h-screen bg-gray-50 px-6 pb-20 pt-28 text-gray-900">
+      <Seo title="글 | 장석환 Frontend Developer" description="업무에서 해결한 문제와 검증 결과, 개발 과정에서 배운 기술을 함께 기록합니다." path="/blog" noindex={Boolean(error)} />
+      <main className="page-shell pb-20 pt-16 text-slate-900">
         <div className="mx-auto max-w-4xl">
           <header className="border-b border-gray-200 pb-10">
             <p className="text-sm font-semibold uppercase tracking-wider text-indigo-600">
               Notes from building
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-              기술 블로그
+              문제를 해결하며 쓴 글
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-600">
-              포트폴리오 프로젝트를 만들며 만난 문제와 선택, 배운 기술을
-              재사용할 수 있는 기록으로 남깁니다.
+              업무에서 내린 선택과 검증 결과, 개발하면서 배운 기술을 함께 기록합니다.
+              업무 사례에는 적용 범위와 한계를, 개발 기록에는 개념과 구현 과정을 담았습니다.
             </p>
           </header>
 
-          {error ? (
-            <div className="mt-10 rounded-xl bg-red-50 p-6 text-red-700" role="alert">
-              <p className="font-semibold">블로그 글을 불러오지 못했습니다.</p>
-              <p className="mt-2 text-sm">{error}</p>
-            </div>
-          ) : posts.length === 0 ? (
-            <div className="mt-10 rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-600">
-              아직 공개된 글이 없습니다.
-            </div>
-          ) : (
-            <ol className="divide-y divide-gray-200">
+          <ol className="divide-y divide-gray-200" aria-label="업무 사례와 개발 기록">
               {posts.map((post) => (
-                <li key={post.id}>
+                <li key={`post-${post.id}`}>
                   <article className="py-9">
+                    <p className="mb-2 text-sm font-semibold text-indigo-700">
+                      {getCaseStudyByPostId(post.id) ? "업무 사례" : "개발 기록"}
+                    </p>
                     <time
                       dateTime={post.createdAt ?? undefined}
                       className="text-sm font-medium text-gray-500"
@@ -86,8 +71,17 @@ export default function Blog({ posts, error }: BlogPageProps) {
                   </article>
                 </li>
               ))}
-            </ol>
-          )}
+          </ol>
+          {error ? (
+            <div className="mt-8 rounded-lg bg-red-50 p-6 text-red-700" role="alert">
+              <p className="font-semibold">글 목록을 불러오지 못했습니다.</p>
+              <p className="mt-2 text-sm">{error}</p>
+            </div>
+          ) : posts.length === 0 ? (
+            <p className="border-t border-gray-200 pt-6 text-sm text-gray-500">
+              아직 등록된 글이 없습니다.
+            </p>
+          ) : null}
         </div>
       </main>
     </div>
