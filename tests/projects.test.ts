@@ -11,6 +11,8 @@ test("exports unique project IDs and keeps the three selected projects separate 
   assert.deepEqual(projectData.selectedProjects.map(({ id }) => id), ["dashboard", "TripApp", "rn-webbridge"]);
   assert.ok(projectData.selectedProjects.every(({ category }) => category === "selected"));
   assert.ok(projectData.archivedProjects.every(({ category }) => category === "archive"));
+  assert.equal(projectData.projects.length, 16);
+  assert.equal(projectData.archivedProjects.length, 13);
   assert.equal(projectData.selectedProjects.length + projectData.archivedProjects.length, ids.length);
   for (const id of ["my-chat-app", "my-chat-server", "food-appp", "del-electron-app", "del-frontend"]) {
     assert.ok(projectData.archivedProjects.some((project) => project.id === id));
@@ -18,11 +20,11 @@ test("exports unique project IDs and keeps the three selected projects separate 
   }
 });
 
-test("selected projects contain an evidence-oriented detail narrative without invented periods", () => {
+test("selected projects keep their detail narrative without inventing unavailable periods", () => {
   assert.ok(Array.isArray(projectData.selectedProjects), "selectedProjects must be exported");
   for (const project of projectData.selectedProjects) {
-    for (const field of ["title", "period", "role", "summary", "problem"] as const) {
-      assert.ok(project[field].trim(), `${project.id}.${field} must not be empty`);
+    for (const field of ["title", "role", "summary", "problem"] as const) {
+      assert.ok(project[field]?.trim(), `${project.id}.${field} must not be empty`);
     }
     for (const field of ["contribution", "result", "limitations", "techStack"] as const) {
       assert.ok(project[field].length > 0, `${project.id}.${field} must not be empty`);
@@ -30,6 +32,19 @@ test("selected projects contain an evidence-oriented detail narrative without in
     }
     assert.deepEqual(project.relatedCaseStudies, [], "personal projects are not evidence for company case studies");
   }
+});
+
+test("unavailable project details are omitted instead of publishing editorial placeholders", () => {
+  for (const project of projectData.projects) assert.equal(project.period, undefined, `${project.id} has no confirmed period`);
+  for (const project of projectData.archivedProjects.filter(({ id }) => id !== "my-next-app")) {
+    assert.equal(project.summary, "이전에 학습과 실험을 위해 만든 개인 프로젝트입니다.");
+    assert.equal(project.role, undefined);
+    assert.equal(project.problem, undefined);
+    assert.deepEqual(project.techStack, []);
+    assert.deepEqual(project.limitations, []);
+  }
+  assert.deepEqual(projectData.getProjectById("my-next-app")?.limitations, []);
+  assert.doesNotMatch(JSON.stringify(projectData.projects), /기록 미확인|재검증 전|보증하지 않습니다|해석하지 않습니다|성과나 방문자 지표는 제시하지/);
 });
 
 test("corrects the portfolio stack and includes only confirmed selected demo URLs", () => {
@@ -69,7 +84,7 @@ test("returns only labeled HTTP(S) project links and omits empty or unsafe links
   assert.deepEqual(projectData.getProjectLinks({ ...project, github: undefined, demo: undefined, links: undefined }), []);
   assert.deepEqual(projectData.getProjectLinks(project), [
     { label: "GitHub", href: project.github },
-    { label: "Demo", href: project.demo },
+    { label: "데모 보기", href: project.demo },
   ]);
 });
 

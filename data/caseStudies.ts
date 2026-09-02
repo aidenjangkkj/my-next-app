@@ -17,14 +17,14 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "ios-webview-model-cache",
     title: "Service Worker와 Cache Storage로 정적 리소스 캐싱하기",
-    summary: "캐시가 있을 것이라는 가정 대신, 응답을 어디에서 재사용했는지 관측하고 fallback을 구성했습니다.",
+    summary: "서비스 워커가 페이지를 제어하지 않는 환경에도 별도 캐시 경로를 만들고, 응답이 재사용되는지 확인했습니다.",
     postId: "LTXMexwiS1ALARfmq8JC",
     relatedProjectIds: ["reward-content"],
   },
   {
     slug: "native-ad-lifecycle-config",
     title: "WebView 광고 callback 누락과 Config 오류 처리",
-    summary: "광고를 실행하는 경계에는 복구 타이머를, 정책을 저장하는 경계에는 계약 검증을 두었습니다.",
+    summary: "광고 응답이 누락되면 대기 상태를 복구하고, 잘못된 설정은 저장 전에 막도록 했습니다.",
     postId: "KBqgU4z8g8cw0hTYYTdS",
     relatedProjectIds: ["reward-content", "common-interface", "customer-events", "operations"],
   },

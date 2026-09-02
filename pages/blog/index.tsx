@@ -26,19 +26,18 @@ const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
 export default function Blog({ posts, error }: BlogPageProps) {
   return (
     <div>
-      <Seo title="글 | 장석환 Frontend Developer" description="업무에서 해결한 문제와 검증 결과, 개발 과정에서 배운 기술을 함께 기록합니다." path="/blog" noindex={Boolean(error)} />
+      <Seo title="글 | 장석환 Frontend Developer" description="개발하면서 겪은 문제와 해결 과정, 새로 배운 내용을 기록합니다." path="/blog" noindex={Boolean(error)} />
       <main className="page-shell pb-20 pt-16 text-slate-900">
         <div className="mx-auto max-w-4xl">
           <header className="border-b border-gray-200 pb-10">
             <p className="text-sm font-semibold uppercase tracking-wider text-indigo-600">
-              Notes from building
+              개발 기록
             </p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
               문제를 해결하며 쓴 글
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-600">
-              업무에서 내린 선택과 검증 결과, 개발하면서 배운 기술을 함께 기록합니다.
-              업무 사례에는 적용 범위와 한계를, 개발 기록에는 개념과 구현 과정을 담았습니다.
+              개발하면서 겪은 문제와 해결 과정, 새로 배운 내용을 기록합니다.
             </p>
           </header>
 

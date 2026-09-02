@@ -19,15 +19,34 @@ assert.equal(projectCanonical.origin, canonicalOf(home).origin);
 assert.equal(projectCanonical.pathname, "/projects/dashboard");
 assert.doesNotMatch(read("experience"), /3회에서 1회|1회→0회|10초/);
 const listing = read("projects");
+const archive = read("projects/archive");
+const projectIds = ["dashboard", "TripApp", "rn-webbridge", "my-next-app", "trademark-search-spa", "community-mvp", "rpg-text-adventure", "review", "my-chat-app", "my-chat-server", "Gamelist", "food-appp", "del-electron-app", "del-frontend", "Responsive", "DEG"];
+const archiveIds = projectIds.slice(3);
+for (const id of projectIds) {
+  const html = read(`projects/${id}`);
+  assert.equal(/<dt[^>]*>기간|기록 미확인|재검증 전|보증하지 않습니다|해석하지 않습니다/.test(html), false, `unavailable metadata omitted: ${id}`);
+  assert.match(html, /프로젝트 목록으로/, `return link: ${id}`);
+}
+assert.match(listing, /대표 프로젝트/);
+assert.match(listing, /이전 프로젝트/);
+for (const id of archiveIds) assert.ok(archive.includes(`href="/projects/${id}"`), `archive link: ${id}`);
+for (const id of archiveIds.slice(1)) {
+  const html = read(`projects/${id}`);
+  assert.doesNotMatch(html, /<dt[^>]*>(?:역할|기술)|<h2[^>]*>(?:문제|검증 범위와 한계)|<dl\b/, `empty archive sections omitted: ${id}`);
+}
+assert.doesNotMatch(archive, /기록 미확인/);
+assert.match(read("projects/my-next-app"), /<h2[^>]*>문제/);
+assert.match(read("projects/my-next-app"), /<dt[^>]*>기술/);
+assert.match(read("projects/dashboard"), /데모 보기/);
 for (const id of ["dashboard", "TripApp", "rn-webbridge"]) assert.ok(listing.includes(`href="/projects/${id}"`), `selected ${id}`);
 for (const id of ["my-next-app", "my-chat-app", "food-appp"]) assert.ok(!listing.includes(`href="/projects/${id}"`), `archive ${id} excluded`);
 assert.doesNotMatch(listing, /\/api\/(?:github\/)?projects|프로젝트 정보를 불러오는 중/);
-assert.doesNotMatch(read("projects/trademark-search-spa"), /href="(?:\s*|undefined|null)"|>GitHub<|>Demo</);
-assert.doesNotMatch(read("projects/rn-webbridge"), />Demo</);
+assert.doesNotMatch(read("projects/trademark-search-spa"), /href="(?:\s*|undefined|null)"|>GitHub<|>데모 보기/);
+assert.doesNotMatch(read("projects/rn-webbridge"), />데모 보기/);
 assert.match(read("projects/dashboard"), /Emissions Dashboard/);
 
 const manifest = JSON.parse(fs.readFileSync(".next/prerender-manifest.json", "utf8"));
-for (const route of ["/projects/dashboard", "/projects/TripApp", "/projects/rn-webbridge"]) assert.ok(manifest.routes[route], `SSG ${route}`);
+for (const id of projectIds) assert.ok(manifest.routes[`/projects/${id}`], `SSG /projects/${id}`);
 assert.equal(manifest.dynamicRoutes["/projects/[id]"].fallback, false);
 assert.equal(manifest.dynamicRoutes["/case-studies/[slug]"], undefined);
 assert.ok(Object.keys(manifest.routes).every((route) => !route.startsWith("/case-studies")), "legacy case studies must not generate static article bodies");
