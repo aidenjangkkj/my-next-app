@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import * as blog from "../lib/blog.ts";
 import {
   createExcerpt,
   fromDateTimeLocal,
@@ -10,6 +11,16 @@ import {
 } from "../lib/blog.ts";
 
 const timestamp = (value: string) => ({ toDate: () => new Date(value) });
+
+test("formats blog datetimes with deterministic Korean text in Asia/Seoul", () => {
+  assert.equal(typeof blog.formatBlogDateTime, "function", "formatBlogDateTime must be exported");
+  assert.equal(blog.formatBlogDateTime("2026-08-04T04:57:00.000Z"), "2026년 8월 4일 오후 01:57");
+  assert.equal(blog.formatBlogDateTime("2026-09-02T08:41:00.000Z"), "2026년 9월 2일 오후 05:41");
+  assert.equal(blog.formatBlogDateTime("2026-08-03T15:00:00.000Z"), "2026년 8월 4일 오전 12:00");
+  assert.equal(blog.formatBlogDateTime("2026-08-04T03:00:00.000Z"), "2026년 8월 4일 오후 12:00");
+  assert.equal(blog.formatBlogDateTime(null), "작성일 미정");
+  assert.equal(blog.formatBlogDateTime("invalid"), "작성일 미정");
+});
 
 test("maps a legacy post with optional dates", () => {
   assert.deepEqual(

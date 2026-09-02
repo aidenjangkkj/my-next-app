@@ -44,7 +44,7 @@ test("unavailable project details are omitted instead of publishing editorial pl
     assert.deepEqual(project.limitations, []);
   }
   assert.deepEqual(projectData.getProjectById("my-next-app")?.limitations, []);
-  assert.doesNotMatch(JSON.stringify(projectData.projects), /기록 미확인|재검증 전|보증하지 않습니다|해석하지 않습니다|성과나 방문자 지표는 제시하지/);
+  assert.doesNotMatch(JSON.stringify(projectData.projects), /기록 미확인|재검증 전|보증하지 않습니다|해석하지 않습니다|성과나 방문자 지표는 제시하지|별도로 검증하지 않았습니다|실행 검증하지 않았습니다|재검증하지 않았습니다/);
 });
 
 test("corrects the portfolio stack and includes only confirmed selected demo URLs", () => {

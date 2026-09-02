@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { GetServerSideProps } from "next";
 import { doc, getDoc } from "firebase/firestore";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-import { createExcerpt, mapBlogPost, type BlogPost } from "@/lib/blog";
+import { createExcerpt, formatBlogDateTime, mapBlogPost, type BlogPost } from "@/lib/blog";
 import { getFirebaseDb } from "@/lib/firebase";
 import { getCaseStudyByPostId } from "@/data/caseStudies";
 import { experienceProjects } from "@/data/experience";
@@ -12,15 +12,6 @@ interface BlogPostPageProps {
   post: BlogPost | null;
   error: string | null;
 }
-
-const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  timeZone: "Asia/Seoul",
-});
 
 export default function BlogPostPage({ post, error }: BlogPostPageProps) {
   const study = getCaseStudyByPostId(post?.id);
@@ -54,13 +45,11 @@ export default function BlogPostPage({ post, error }: BlogPostPageProps) {
                 </h1>
                 <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-500">
                   <time dateTime={post.createdAt ?? undefined}>
-                    작성일: {post.createdAt
-                      ? dateFormatter.format(new Date(post.createdAt))
-                      : "작성일 미정"}
+                    작성일: {formatBlogDateTime(post.createdAt)}
                   </time>
                   {post.updatedAt && (
                     <time dateTime={post.updatedAt}>
-                      수정일: {dateFormatter.format(new Date(post.updatedAt))}
+                      수정일: {formatBlogDateTime(post.updatedAt)}
                     </time>
                   )}
                 </div>

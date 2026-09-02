@@ -44,6 +44,27 @@ export function sortBlogPosts(posts: BlogPost[]) {
   });
 }
 
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Seoul",
+  year: "numeric",
+  month: "numeric",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+export function formatBlogDateTime(value: string | null) {
+  if (!value) return "작성일 미정";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "작성일 미정";
+
+  const parts = Object.fromEntries(dateFormatter.formatToParts(date).map(({ type, value }) => [type, value]));
+  const hour = Number(parts.hour);
+  const period = hour < 12 ? "오전" : "오후";
+  return `${parts.year}년 ${parts.month}월 ${parts.day}일 ${period} ${String(hour % 12 || 12).padStart(2, "0")}:${parts.minute}`;
+}
+
 export function validatePostInput(values: PostFormValues) {
   if (!values.title.trim()) return "제목을 입력해 주세요.";
   if (!values.content.trim()) return "내용을 입력해 주세요.";

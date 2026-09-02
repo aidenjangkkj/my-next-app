@@ -47,7 +47,7 @@ export const projects: ProjectDetail[] = [
     limitations: [
       "배출량은 샘플 데이터를 사용하고, 메모는 메모리에 임시 저장합니다. 실서비스 데이터 수집과 서버 영구 저장은 포함하지 않았습니다.",
       "환율 API 실패 시 기본값을 사용하므로 실제 환율이나 세금 계산의 정확성을 보장하지 않습니다.",
-      "운영 규모·성능 개선 수치와 전체 UI 흐름의 실행 결과는 별도로 검증하지 않았습니다.",
+      "운영 규모와 성능 개선 폭은 따로 측정하지 않았습니다. 전체 화면의 동작은 추가 확인이 필요합니다.",
     ],
     techStack: ["Next.js 15 (App Router)", "React 19", "TypeScript", "Tailwind CSS", "Zustand", "Recharts"],
     github: "https://github.com/aidenjangkkj/dashboard",
@@ -74,7 +74,7 @@ export const projects: ProjectDetail[] = [
     limitations: [
       "지도에는 장소 좌표를 순서대로 잇는 선을 표시합니다. 실제 길찾기나 교통수단별 경로 계산은 포함하지 않았습니다.",
       "JSON 구간 추출은 잘못된 JSON 문법을 일반적으로 복구하는 기능이 아닙니다. 생성 내용과 장소 좌표의 사실성도 별도 확인이 필요합니다.",
-      "Gemini·Mapbox 키와 외부 API 상태에 의존합니다. 현재 배포의 유료 API 호출·생성 품질·전체 편집 흐름은 실행 검증하지 않았습니다.",
+      "Gemini·Mapbox 키와 외부 API 상태에 따라 동작이 달라질 수 있습니다. 현재 데모의 유료 API 호출과 생성 품질, 전체 편집 흐름은 추가 확인이 필요합니다.",
     ],
     techStack: ["Next.js 16 (App Router)", "React 19", "TypeScript", "Tailwind CSS", "Gemini API", "Mapbox GL JS", "Zod", "dnd-kit"],
     github: "https://github.com/aidenjangkkj/trip-app-v2",
@@ -101,7 +101,7 @@ export const projects: ProjectDetail[] = [
     limitations: [
       "이 저장소에는 웹 측 소스가 포함되어 있지 않아, 양쪽 타입 공유와 전체 요청·응답 흐름은 여기서 확인할 수 없습니다.",
       "Android의 추적 제한 판정은 null 여부만 확인합니다. 그 외의 광고 ID 제한 상태는 별도로 판정하지 않습니다.",
-      "실기기 권한·광고 ID 반환·APK 설치는 재검증하지 않았습니다. 회사 프로젝트의 광고 SDK 구현 사례와는 별개의 개인 실험입니다.",
+      "실기기에서 권한 요청, 광고 ID 조회, APK 설치가 끝까지 동작하는지는 추가 확인이 필요합니다. 회사 광고 SDK와는 별개로 만든 개인 실험입니다.",
     ],
     techStack: ["React Native", "Expo", "TypeScript", "React Native WebView", "webview-bridge", "expo-network", "expo-tracking-transparency", "NativeWind"],
     github: "https://github.com/aidenjangkkj/RN_ADID_Bridge",
