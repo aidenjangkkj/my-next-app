@@ -105,7 +105,10 @@ export default function PostForm({
       </div>
 
       {error && (
-        <p className="rounded-lg bg-red-50 p-4 text-sm text-red-700" role="alert">
+        <p
+          className="rounded-lg bg-red-50 p-4 text-sm text-red-700"
+          role="alert"
+        >
           {error}
         </p>
       )}

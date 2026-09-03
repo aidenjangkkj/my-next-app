@@ -1,6 +1,10 @@
 export function isActiveNavigationItem(pathname: string, href: string) {
   pathname = pathname.split(/[?#]/)[0];
-  if (href === "/blog" && (pathname === "/case-studies" || pathname.startsWith("/case-studies/"))) return true;
+  if (
+    href === "/blog" &&
+    (pathname === "/case-studies" || pathname.startsWith("/case-studies/"))
+  )
+    return true;
   return href === "/"
     ? pathname === "/"
     : pathname === href || pathname.startsWith(`${href}/`);

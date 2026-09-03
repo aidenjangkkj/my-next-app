@@ -37,7 +37,11 @@ export default function AdminLogin() {
     <div>
       <Head>
         <title>관리자 로그인 · 기술 블로그</title>
-        <meta name="description" content="기술 블로그 관리자 로그인" key="description" />
+        <meta
+          name="description"
+          content="기술 블로그 관리자 로그인"
+          key="description"
+        />
       </Head>
       <main className="min-h-screen bg-gray-100 px-6 pb-16 pt-28 text-gray-900">
         <section className="mx-auto max-w-md rounded-xl bg-white p-8 shadow-md">
@@ -59,7 +63,10 @@ export default function AdminLogin() {
           </button>
 
           {error && (
-            <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-700" role="alert">
+            <p
+              className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-700"
+              role="alert"
+            >
               {error}
             </p>
           )}

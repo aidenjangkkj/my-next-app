@@ -22,7 +22,8 @@ export function getFirebaseApp() {
     );
   }
 
-  firebaseApp ??= getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+  firebaseApp ??=
+    getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
   return firebaseApp;
 }
 
