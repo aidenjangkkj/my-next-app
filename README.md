@@ -36,6 +36,12 @@ npm run test:static
 
 제한된 실행 환경에서 Turbopack의 보조 프로세스 포트 바인딩이 차단되면 `npm run build -- --webpack`으로 같은 소스를 검증할 수 있습니다. 이후 `npm run test:static`을 실행합니다.
 
+## CI와 배포
+
+GitHub Actions는 master push와 master 대상 pull request에서 테스트·린트·프로덕션 빌드·정적 HTML 검사를 실행합니다. 공개 배포는 Vercel Git 연동에서만 수행하며, Actions에는 배포 토큰이 필요하지 않습니다.
+
+공개 사이트: [장석환 포트폴리오](https://jang-portfolio-one-chi.vercel.app/)
+
 ## 환경변수
 
 필요한 이름은 [`.env.example`](./.env.example)에 있습니다. 로컬 값은 `.env.local`에 넣고 커밋하지 않습니다.
@@ -87,8 +93,8 @@ Firebase CLI로 규칙을 배포하면 Console의 기존 규칙을 덮어쓰므�
 | `/experience` | 익명화한 경력 프로젝트 네 영역 |
 | `/case-studies` | 통합 글 목록 `/blog`로 영구 리다이렉트 |
 | `/case-studies/[slug]` | 알려진 세 주소를 해당 `/blog/[id]`로 영구 리다이렉트, 없는 slug는 404 |
-| `/projects` | 선별 개인 프로젝트 3개, 클라이언트 데이터 fetch 없음 |
-| `/projects/archive` | 이전 프로젝트의 간단한 보관 목록 |
+| `/projects` | 선별 개인 프로젝트 2개, 클라이언트 데이터 fetch 없음 |
+| `/projects/archive` | 이전 프로젝트 14개의 보관 목록 |
 | `/projects/[id]` | 선별·보관 프로젝트 SSG 상세, 없는 ID는 404 |
 | `/blog` | Firestore에 저장된 글 목록만 표시 |
 | `/blog/[id]` | 관리자가 저장한 Markdown 본문 표시 |

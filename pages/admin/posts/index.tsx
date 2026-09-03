@@ -59,7 +59,9 @@ function AdminPostsContent() {
   }, [requestVersion]);
 
   const handleDelete = async (postId: string) => {
-    if (!window.confirm("이 게시글을 삭제할까요? 삭제 후 복구할 수 없습니다.")) {
+    if (
+      !window.confirm("이 게시글을 삭제할까요? 삭제 후 복구할 수 없습니다.")
+    ) {
       return;
     }
 
@@ -70,7 +72,9 @@ function AdminPostsContent() {
       setPosts((current) => current.filter((post) => post.id !== postId));
     } catch (deleteError) {
       console.error("게시글 삭제 중 오류 발생:", deleteError);
-      setActionError("게시글을 삭제하지 못했습니다. 잠시 후 다시 시도해 주세요.");
+      setActionError(
+        "게시글을 삭제하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      );
     } finally {
       setDeletingId(null);
     }
@@ -92,7 +96,9 @@ function AdminPostsContent() {
         <div>
           <p className="text-sm font-semibold text-indigo-600">Blog Admin</p>
           <h1 className="mt-1 text-3xl font-bold">게시글 관리</h1>
-          <p className="mt-2 text-gray-600">저장하면 블로그에 바로 공개됩니다.</p>
+          <p className="mt-2 text-gray-600">
+            저장하면 블로그에 바로 공개됩니다.
+          </p>
         </div>
         <div className="flex flex-wrap gap-3">
           <Link
@@ -119,7 +125,9 @@ function AdminPostsContent() {
 
       <div className="mt-8">
         {isLoading ? (
-          <p className="py-12 text-center text-gray-500">게시글을 불러오고 있습니다.</p>
+          <p className="py-12 text-center text-gray-500">
+            게시글을 불러오고 있습니다.
+          </p>
         ) : error ? (
           <div className="rounded-lg bg-red-50 p-6 text-red-700" role="alert">
             <p>{error}</p>

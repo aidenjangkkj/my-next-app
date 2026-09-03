@@ -21,7 +21,9 @@ export default function NewAdminPost() {
             <div className="rounded-xl bg-white p-6 shadow-md md:p-10">
               <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm font-semibold text-indigo-600">Blog Admin</p>
+                  <p className="text-sm font-semibold text-indigo-600">
+                    Blog Admin
+                  </p>
                   <h1 className="mt-1 text-3xl font-bold">새 글 작성</h1>
                 </div>
                 <Link

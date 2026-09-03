@@ -26,7 +26,12 @@ const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
 export default function Blog({ posts, error }: BlogPageProps) {
   return (
     <div>
-      <Seo title="글 | 장석환 Frontend Developer" description="개발하면서 겪은 문제와 해결 과정, 새로 배운 내용을 기록합니다." path="/blog" noindex={Boolean(error)} />
+      <Seo
+        title="글 | 장석환 Frontend Developer"
+        description="개발하면서 겪은 문제와 해결 과정, 새로 배운 내용을 기록합니다."
+        path="/blog"
+        noindex={Boolean(error)}
+      />
       <main className="page-shell pb-20 pt-16 text-slate-900">
         <div className="mx-auto max-w-4xl">
           <header className="border-b border-gray-200 pb-10">
@@ -41,38 +46,44 @@ export default function Blog({ posts, error }: BlogPageProps) {
             </p>
           </header>
 
-          <ol className="divide-y divide-gray-200" aria-label="업무 사례와 개발 기록">
-              {posts.map((post) => (
-                <li key={`post-${post.id}`}>
-                  <article className="py-9">
-                    <p className="mb-2 text-sm font-semibold text-indigo-700">
-                      {getCaseStudyByPostId(post.id) ? "업무 사례" : "개발 기록"}
-                    </p>
-                    <time
-                      dateTime={post.createdAt ?? undefined}
-                      className="text-sm font-medium text-gray-500"
+          <ol
+            className="divide-y divide-gray-200"
+            aria-label="업무 사례와 개발 기록"
+          >
+            {posts.map((post) => (
+              <li key={`post-${post.id}`}>
+                <article className="py-9">
+                  <p className="mb-2 text-sm font-semibold text-indigo-700">
+                    {getCaseStudyByPostId(post.id) ? "업무 사례" : "개발 기록"}
+                  </p>
+                  <time
+                    dateTime={post.createdAt ?? undefined}
+                    className="text-sm font-medium text-gray-500"
+                  >
+                    {post.createdAt
+                      ? dateFormatter.format(new Date(post.createdAt))
+                      : "작성일 미정"}
+                  </time>
+                  <h2 className="mt-2 text-2xl font-bold tracking-tight">
+                    <Link
+                      href={`/blog/${post.id}`}
+                      className="rounded-sm transition hover:text-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600"
                     >
-                      {post.createdAt
-                        ? dateFormatter.format(new Date(post.createdAt))
-                        : "작성일 미정"}
-                    </time>
-                    <h2 className="mt-2 text-2xl font-bold tracking-tight">
-                      <Link
-                        href={`/blog/${post.id}`}
-                        className="rounded-sm transition hover:text-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600"
-                      >
-                        {post.title}
-                      </Link>
-                    </h2>
-                    <p className="mt-3 leading-7 text-gray-600">
-                      {createExcerpt(post.content) || "내용이 없습니다."}
-                    </p>
-                  </article>
-                </li>
-              ))}
+                      {post.title}
+                    </Link>
+                  </h2>
+                  <p className="mt-3 leading-7 text-gray-600">
+                    {createExcerpt(post.content) || "내용이 없습니다."}
+                  </p>
+                </article>
+              </li>
+            ))}
           </ol>
           {error ? (
-            <div className="mt-8 rounded-lg bg-red-50 p-6 text-red-700" role="alert">
+            <div
+              className="mt-8 rounded-lg bg-red-50 p-6 text-red-700"
+              role="alert"
+            >
               <p className="font-semibold">글 목록을 불러오지 못했습니다.</p>
               <p className="mt-2 text-sm">{error}</p>
             </div>

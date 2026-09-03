@@ -35,7 +35,9 @@ async function fetchPost(postId: string): Promise<PostFormValues | null> {
 
 function EditPostContent({ postId }: { postId: string }) {
   const router = useRouter();
-  const [initialValues, setInitialValues] = useState<PostFormValues | null>(null);
+  const [initialValues, setInitialValues] = useState<PostFormValues | null>(
+    null,
+  );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,7 +62,11 @@ function EditPostContent({ postId }: { postId: string }) {
   }, [postId]);
 
   if (isLoading) {
-    return <p className="rounded-lg bg-white p-6 shadow-sm">게시글을 불러오고 있습니다.</p>;
+    return (
+      <p className="rounded-lg bg-white p-6 shadow-sm">
+        게시글을 불러오고 있습니다.
+      </p>
+    );
   }
 
   if (error) {

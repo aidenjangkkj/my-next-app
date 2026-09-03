@@ -4,8 +4,102 @@ import { career, experienceProjects } from "@/data/experience";
 import { getCaseStudyBySlug, getCaseStudyHref } from "@/data/caseStudies";
 
 export default function Experience() {
-  return <main className="page-shell py-14 sm:py-20"><Seo title="경력 | 장석환 Frontend Developer" description={career.summary} path="/experience" /><header className="border-b border-slate-200 pb-12"><h1 className="page-heading">경력</h1><div className="mt-8 flex flex-wrap gap-x-5 gap-y-2"><p className="font-bold">{career.company} · {career.role}</p><p className="text-slate-500">{career.period}</p></div><p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">{career.summary}</p><p className="mt-4 text-sm text-slate-500">고객사명과 내부 패키지명은 공개 범위를 고려해 익명화했습니다.</p></header>
-    {experienceProjects.map((project, index) => <section id={project.id} key={project.id} className="scroll-mt-24 border-b border-slate-200 py-12 sm:py-16"><div className="grid gap-7 lg:grid-cols-[18rem_1fr]"><div><p className="eyebrow">0{index + 1} · {project.audience}</p><h2 className="mt-4 text-2xl font-bold leading-snug">{project.title}</h2><p className="mt-5 text-sm leading-7 text-slate-500">{project.stack.join(" · ")}</p></div><div><p className="text-lg leading-8 text-slate-700">{project.summary}</p><h3 className="mb-4 mt-8 font-bold">주요 기여</h3><ul className="prose-list">{project.contribution.map((item) => <li key={item}>{item}</li>)}</ul>{project.products && <div className="mt-8 grid gap-5">{project.products.map((product) => <article key={product.title} className="rounded-lg bg-slate-50 p-6"><h3 className="font-bold">{product.title}</h3><p className="mt-3 leading-7 text-slate-600">{product.description}</p><ul className="prose-list mt-4 text-sm">{product.features.map((item) => <li key={item}>{item}</li>)}</ul></article>)}</div>}<div className="mt-8 border-l-2 border-indigo-200 pl-5"><h3 className="text-sm font-semibold">관련 글</h3><ul className="mt-3 space-y-3">{project.caseStudies.map((slug) => <li key={slug}><Link href={getCaseStudyHref(getCaseStudyBySlug(slug)!)} className="text-link text-sm leading-6">{getCaseStudyBySlug(slug)?.title} <span aria-hidden="true">→</span></Link></li>)}</ul></div></div></div></section>)}
-    <section className="max-w-3xl py-12"><h2 className="text-xl font-bold">연락</h2><Link href="/contact" className="button-secondary mt-7">연락하기</Link></section>
-  </main>;
+  return (
+    <main className="page-shell py-14 sm:py-20">
+      <Seo
+        title="경력 | 장석환 Frontend Developer"
+        description={career.summary}
+        path="/experience"
+      />
+      <header className="border-b border-slate-200 pb-12">
+        <h1 className="page-heading">경력</h1>
+        <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2">
+          <p className="font-bold">
+            {career.company} · {career.role}
+          </p>
+          <p className="text-slate-500">{career.period}</p>
+        </div>
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+          {career.summary}
+        </p>
+        <p className="mt-4 text-sm text-slate-500">
+          고객사명과 내부 패키지명은 공개 범위를 고려해 익명화했습니다.
+        </p>
+      </header>
+      {experienceProjects.map((project, index) => (
+        <section
+          id={project.id}
+          key={project.id}
+          className="scroll-mt-24 border-b border-slate-200 py-12 sm:py-16"
+        >
+          <div className="grid gap-7 lg:grid-cols-[18rem_1fr]">
+            <div>
+              <p className="eyebrow">
+                0{index + 1} · {project.audience}
+              </p>
+              <h2 className="mt-4 text-2xl font-bold leading-snug">
+                {project.title}
+              </h2>
+              <p className="mt-5 text-sm leading-7 text-slate-500">
+                {project.stack.join(" · ")}
+              </p>
+            </div>
+            <div>
+              <p className="text-lg leading-8 text-slate-700">
+                {project.summary}
+              </p>
+              <h3 className="mb-4 mt-8 font-bold">주요 기여</h3>
+              <ul className="prose-list">
+                {project.contribution.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+              {project.products && (
+                <div className="mt-8 grid gap-5">
+                  {project.products.map((product) => (
+                    <article
+                      key={product.title}
+                      className="rounded-lg bg-slate-50 p-6"
+                    >
+                      <h3 className="font-bold">{product.title}</h3>
+                      <p className="mt-3 leading-7 text-slate-600">
+                        {product.description}
+                      </p>
+                      <ul className="prose-list mt-4 text-sm">
+                        {product.features.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
+                </div>
+              )}
+              <div className="mt-8 border-l-2 border-indigo-200 pl-5">
+                <h3 className="text-sm font-semibold">관련 글</h3>
+                <ul className="mt-3 space-y-3">
+                  {project.caseStudies.map((slug) => (
+                    <li key={slug}>
+                      <Link
+                        href={getCaseStudyHref(getCaseStudyBySlug(slug)!)}
+                        className="text-link text-sm leading-6"
+                      >
+                        {getCaseStudyBySlug(slug)?.title}{" "}
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
+      <section className="max-w-3xl py-12">
+        <h2 className="text-xl font-bold">연락</h2>
+        <Link href="/contact" className="button-secondary mt-7">
+          연락하기
+        </Link>
+      </section>
+    </main>
+  );
 }

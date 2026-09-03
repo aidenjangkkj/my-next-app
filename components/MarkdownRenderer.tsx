@@ -8,14 +8,8 @@ const schema = {
   ...defaultSchema,
   attributes: {
     ...defaultSchema.attributes,
-    code: [
-      ...(defaultSchema.attributes?.code || []),
-      ["className"],
-    ],
-    span: [
-      ...(defaultSchema.attributes?.span || []),
-      ["className"],
-    ],
+    code: [...(defaultSchema.attributes?.code || []), ["className"]],
+    span: [...(defaultSchema.attributes?.span || []), ["className"]],
   },
 };
 
@@ -28,10 +22,7 @@ export default function MarkdownRenderer({ content }: Props) {
     <article className="markdown-body">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[
-          [rehypeSanitize, schema],
-          rehypeHighlight,
-        ]}
+        rehypePlugins={[[rehypeSanitize, schema], rehypeHighlight]}
       >
         {content}
       </ReactMarkdown>

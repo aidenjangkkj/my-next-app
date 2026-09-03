@@ -59,7 +59,9 @@ export function formatBlogDateTime(value: string | null) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "작성일 미정";
 
-  const parts = Object.fromEntries(dateFormatter.formatToParts(date).map(({ type, value }) => [type, value]));
+  const parts = Object.fromEntries(
+    dateFormatter.formatToParts(date).map(({ type, value }) => [type, value]),
+  );
   const hour = Number(parts.hour);
   const period = hour < 12 ? "오전" : "오후";
   return `${parts.year}년 ${parts.month}월 ${parts.day}일 ${period} ${String(hour % 12 || 12).padStart(2, "0")}:${parts.minute}`;
