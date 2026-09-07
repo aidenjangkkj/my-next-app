@@ -37,6 +37,7 @@ assert.doesNotMatch(read("experience"), /3회에서 1회|1회→0회|10초/);
 const listing = read("projects");
 const archive = read("projects/archive");
 const projectIds = [
+  "reward-pocket",
   "dashboard",
   "TripApp",
   "rn-webbridge",
@@ -54,7 +55,7 @@ const projectIds = [
   "Responsive",
   "DEG",
 ];
-const archiveIds = projectIds.slice(2);
+const archiveIds = projectIds.slice(3);
 assert.equal(archiveIds.length, 14);
 for (const id of projectIds) {
   const html = read(`projects/${id}`);
@@ -89,7 +90,7 @@ for (const id of ["rn-webbridge", "my-next-app"]) {
 assert.match(read("projects/dashboard"), /데모 보기/);
 for (const html of [home, listing]) {
   assert.match(html, /class="grid gap-5 md:grid-cols-2"/);
-  for (const id of ["dashboard", "TripApp"])
+  for (const id of ["reward-pocket", "dashboard", "TripApp"])
     assert.ok(html.includes(`href="/projects/${id}"`), `selected ${id}`);
   for (const id of archiveIds)
     assert.ok(
@@ -97,7 +98,7 @@ for (const html of [home, listing]) {
       `archive ${id} excluded`,
     );
 }
-for (const id of ["dashboard", "TripApp"])
+for (const id of ["reward-pocket", "dashboard", "TripApp"])
   assert.doesNotMatch(
     read(`projects/${id}`),
     /전체 화면의 동작은 추가 확인이 필요합니다|현재 데모의 유료 API 호출과 생성 품질, 전체 편집 흐름은 추가 확인이 필요합니다/,
@@ -178,3 +179,10 @@ assert.match(contact, /aria-live="polite"/);
 console.log(
   `Static HTML checks passed: ${htmlFiles.length} pages; CMS article links, legacy redirect route, selected/archive, SSG, metadata, contact semantics.`,
 );
+
+const bridgeDetail = read("projects/reward-pocket");
+assert.match(bridgeDetail, /Reward Pocket/);
+assert.match(bridgeDetail, /demos\/reward-pocket\/index.html\?host=1/);
+const demoHtml = fs.readFileSync("public/demos/reward-pocket/index.html", "utf8");
+assert.match(demoHtml, /src="\/demos\/reward-pocket\/assets\//);
+console.log("Bridge demo entry and portfolio links verified.");

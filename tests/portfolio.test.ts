@@ -82,6 +82,10 @@ test("CI validates master changes without a deployment workflow or secrets", () 
     [...workflow.matchAll(/^\s*- run: (.+)$/gm)].map(([, command]) => command),
     [
       "npm ci",
+      "pnpm --dir demos/reward-pocket install --frozen-lockfile",
+      "npm run test:demo",
+      "npm run build:demo",
+      "git diff --exit-code -- public/demos/reward-pocket",
       "npm test",
       "npm run lint",
       "npm run build",

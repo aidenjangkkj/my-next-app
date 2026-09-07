@@ -20,7 +20,16 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.20.0
       - run: npm ci
+      - run: pnpm --dir demos/reward-pocket install --frozen-lockfile
+      - run: npm run test:demo
+      - run: npm run build:demo
+      - run: git diff --exit-code -- public/demos/reward-pocket
+      - name: Check for untracked demo assets
+        run: test -z "$(git ls-files --others --exclude-standard public/demos/reward-pocket)"
       - run: npm test
       - run: npm run lint
       - run: npm run build

@@ -141,3 +141,9 @@ Firebase CLI로 규칙을 배포하면 Console의 기존 규칙을 덮어쓰므�
 ## 라우트 정리 후 생성 캐시
 
 라우트를 삭제한 뒤 기존 `.next/dev/types`가 없는 파일을 참조하면 개발 서버를 종료하고 해당 **생성 캐시만** 비운 뒤 다시 빌드합니다. 소스 타입 검사를 끄지 않습니다. 새 checkout이나 새 생성 캐시에서는 별도 작업이 필요하지 않습니다.
+
+## Reward Pocket 브릿지 데모
+
+대표 프로젝트 `/projects/reward-pocket`에서 `/demos/reward-pocket/index.html?host=1` 데모로 연결됩니다. 원본 소스·실행 방법·검증 범위는 [demos/reward-pocket](demos/reward-pocket/README.md)에 있습니다. 생성된 정적 파일만 Vercel에서 제공하므로 기존 사이트의 런타임 의존성과 환경변수는 바뀌지 않습니다.
+
+수정 시 `pnpm --dir demos/reward-pocket install --frozen-lockfile`, `npm run test:demo`, `npm run build:demo`를 실행하고 소스와 `public/demos/reward-pocket` 생성물을 함께 커밋합니다. CI에서 재생성 결과의 차이를 검사합니다.

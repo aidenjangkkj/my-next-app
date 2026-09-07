@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.ts",
-    "test:static": "node scripts/check-built-pages.mjs"
+    "test:static": "node scripts/check-built-pages.mjs",
+    "test:demo": "pnpm --dir demos/reward-pocket test",
+    "build:demo": "pnpm --dir demos/reward-pocket build --base=/demos/reward-pocket/ --outDir=../../public/demos/reward-pocket --emptyOutDir"
   },
   "dependencies": {
     "firebase": "^12.17.0",
