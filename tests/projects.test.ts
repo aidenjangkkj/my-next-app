@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import * as projectData from "../data/projects.ts";
 
-test("exports unique project IDs and keeps the two selected projects separate from the archive", () => {
+test("exports unique project IDs and keeps the selected projects separate from the archive", () => {
   assert.ok(Array.isArray(projectData.projects), "projects must be exported");
   assert.ok(
     Array.isArray(projectData.selectedProjects),
@@ -16,7 +16,7 @@ test("exports unique project IDs and keeps the two selected projects separate fr
   assert.equal(new Set(ids).size, ids.length);
   assert.deepEqual(
     projectData.selectedProjects.map(({ id }) => id),
-    ["dashboard", "TripApp"],
+    ["reward-pocket", "dashboard", "TripApp"],
   );
   assert.ok(
     projectData.selectedProjects.every(
@@ -28,7 +28,7 @@ test("exports unique project IDs and keeps the two selected projects separate fr
       ({ category }) => category === "archive",
     ),
   );
-  assert.equal(projectData.projects.length, 16);
+  assert.equal(projectData.projects.length, 17);
   assert.equal(projectData.archivedProjects.length, 14);
   assert.equal(
     projectData.selectedProjects.length + projectData.archivedProjects.length,
@@ -268,4 +268,16 @@ test("generates static paths for both selected and archived project details", ()
       .getProjectStaticPaths()
       .some(({ params }) => params.id === "rn-webbridge"),
   );
+});
+
+
+test("publishes the bridge demo with executable source and an explicit simulation boundary", () => {
+  const project = projectData.getProjectById("reward-pocket");
+  assert.ok(project);
+  assert.equal(project.category, "selected");
+  assert.equal(project.demo, "https://jang-portfolio-one-chi.vercel.app/demos/reward-pocket/index.html?host=1");
+  assert.equal(project.github, "https://github.com/aidenjangkkj/my-next-app/tree/master/demos/reward-pocket");
+  assert.match(project.summary, /브릿지/);
+  assert.match(project.limitations.join(" "), /브라우저/);
+  assert.match(project.contribution.join(" "), /세션/);
 });

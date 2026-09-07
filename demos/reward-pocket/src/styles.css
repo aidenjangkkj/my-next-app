@@ -1,0 +1,14 @@
+body { margin: 0; }
+.radix-themes { --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.brand-mark { background: var(--teal-9); color: white; border-radius: var(--radius-3); padding: 5px 12px; font-size: 25px; font-weight: 700; }
+.campaign-art { min-height: 170px; border-radius: var(--radius-3); background: var(--teal-3); color: var(--teal-11); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3); }
+.campaign-art strong { font-size: 44px; letter-spacing: -2px; }
+.request-id { overflow-wrap: anywhere; }
+.event-log { margin: 0; padding-left: 22px; }
+
+.bridge-frame { width: 100%; height: 850px; border: 1px solid var(--gray-6); border-radius: var(--radius-4); background: white; box-sizing: border-box; }
+.bridge-timeline { max-height: 440px; overflow-y: auto; }
+.bridge-log-row { padding: 12px 0; border-bottom: 1px solid var(--gray-5); overflow-wrap: anywhere; }
+.bridge-log-row details { margin-top: 8px; font-size: 12px; color: var(--gray-11); }
+.bridge-log-row summary { cursor: pointer; }
+.bridge-log-row pre { white-space: pre-wrap; overflow-wrap: anywhere; }

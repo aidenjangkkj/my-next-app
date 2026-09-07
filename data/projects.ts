@@ -28,6 +28,32 @@ const archiveDefaults = {
 
 export const projects: ProjectDetail[] = [
   {
+    id: "reward-pocket",
+    title: "Reward Pocket · App–Web Bridge Lab",
+    category: "selected",
+    role: "개인 프로젝트 · 브릿지 계약, 상태 처리, 검증 화면 구현",
+    summary: "앱과 웹 사이의 광고 요청·응답을 추적하고, 늦은 응답과 중복 메시지를 직접 재현하는 브릿지 데모입니다.",
+    problem: "광고 실행이 끝났는지와 보상이 확정됐는지는 다른 문제입니다. 응답이 누락되거나 연결 세션이 바뀌어도 이전 요청이 현재 화면과 지급 기록을 바꾸지 않도록 경계를 나눴습니다.",
+    contribution: [
+      "모의 앱 호스트와 웹뷰를 iframe·postMessage로 연결하고, 출처·발신 창·메시지 형식·연결 세션·참여 ID를 검증했습니다.",
+      "광고 실행과 보상 상태를 분리하고, 중복·지연·이전 세션 응답을 검증 화면에서 재현하도록 구성했습니다.",
+      "localStorage 저장이 성공한 뒤 잔액을 반영하고, 저장 실패 재시도·새로고침 복원·Web Locks를 이용한 탭 간 쓰기 순서 제어를 구현했습니다.",
+      "송신 로그와 웹의 실제 처리 회신을 구분해 메시지가 전달됐는지, 적용 또는 무시됐는지 확인할 수 있게 했습니다.",
+    ],
+    result: [
+      "정상 시청·모의 지급부터 응답 중복, 8초 타임아웃, 세션 교체까지 브라우저에서 직접 실행할 수 있습니다.",
+      "46개 단위 테스트와 브라우저 검사로 저장 실패 재시도, 연속 응답, 다른 탭의 취소와 겹친 처리 결과를 확인했습니다.",
+    ],
+    limitations: [
+      "브라우저 기반 시뮬레이션입니다. 실제 네이티브 WebView·광고 SDK·서버의 지급 보증은 포함하지 않습니다.",
+      "포인트는 현금 가치가 없으며 기록은 같은 브라우저의 localStorage에 저장됩니다. 기기 간 동기화와 저장값 변조 방지는 제공하지 않습니다.",
+    ],
+    techStack: ["React", "TypeScript", "Radix Themes", "postMessage", "Web Locks", "Vitest"],
+    github: "https://github.com/aidenjangkkj/my-next-app/tree/master/demos/reward-pocket",
+    demo: "https://jang-portfolio-one-chi.vercel.app/demos/reward-pocket/index.html?host=1",
+    relatedCaseStudies: ["native-ad-lifecycle-config"],
+  },
+  {
     id: "dashboard",
     title: "Emissions Dashboard",
     category: "selected",
